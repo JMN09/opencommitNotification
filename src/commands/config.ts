@@ -247,7 +247,7 @@ export const configValidators = {
         'test',
         'flowise'
       ].includes(value) || value.startsWith('ollama'),
-      `${value} is not supported yet, use 'ollama/{model}', 'azure', 'anthropic', flowise, or 'openai' (default)`
+      `${value} is not supported yet, use 'ollama/{model}', 'azure', 'anthropic', 'flowise', or 'openai' (default)`
     );
     return value;
   },

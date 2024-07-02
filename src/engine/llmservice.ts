@@ -17,7 +17,7 @@ export class LlmServiceAi implements AiEngine {
     //console.log(messages);
     //process.exit()
     
-    const url = 'http://localhost:3000/api/v1/prediction/218b6cc2-3a52-45d9-b009-9031b615f0ef%22'; // to be determined
+    const url = 'http://localhost:3000/api/v1/prediction/ab3ded23-ae59-43d0-8a3d-4d60046671b6'; // to be determined
     const p = {
         question : messages[ messages.length - 1 ],
         history : messages.slice( 1, -1 ) 
