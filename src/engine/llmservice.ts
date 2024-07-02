@@ -17,7 +17,7 @@ export class LlmServiceAi implements AiEngine {
     //console.log(messages);
     //process.exit()
     
-    const url = 'http://localhost:3000/api/v1/prediction/218b6cc2-3a52-45d9-b009-9031b615f0ef%22'; // to be determined
+    const url = 'http://localhost:3000/api/v1/prediction/4795e9cb-3a02-4a4c-9a6f-4c7218af84d1'; // this key is specific to flowise
     const p = {
         question : messages[ messages.length - 1 ],
         history : messages.slice( 1, -1 ) 

@@ -25512,8 +25512,8 @@ var require_normalizeHeaderName = __commonJS({
 var require_enhanceError = __commonJS({
   "node_modules/.pnpm/axios@0.26.1/node_modules/axios/lib/core/enhanceError.js"(exports, module2) {
     "use strict";
-    module2.exports = function enhanceError(error, config10, code, request3, response) {
-      error.config = config10;
+    module2.exports = function enhanceError(error, config11, code, request3, response) {
+      error.config = config11;
       if (code) {
         error.code = code;
       }
@@ -25557,9 +25557,9 @@ var require_createError = __commonJS({
   "node_modules/.pnpm/axios@0.26.1/node_modules/axios/lib/core/createError.js"(exports, module2) {
     "use strict";
     var enhanceError = require_enhanceError();
-    module2.exports = function createError(message, config10, code, request3, response) {
+    module2.exports = function createError(message, config11, code, request3, response) {
       var error = new Error(message);
-      return enhanceError(error, config10, code, request3, response);
+      return enhanceError(error, config11, code, request3, response);
     };
   }
 });
@@ -25788,32 +25788,32 @@ var require_xhr = __commonJS({
     var createError = require_createError();
     var transitionalDefaults = require_transitional();
     var Cancel2 = require_Cancel();
-    module2.exports = function xhrAdapter(config10) {
+    module2.exports = function xhrAdapter(config11) {
       return new Promise(function dispatchXhrRequest(resolve, reject) {
-        var requestData = config10.data;
-        var requestHeaders = config10.headers;
-        var responseType = config10.responseType;
+        var requestData = config11.data;
+        var requestHeaders = config11.headers;
+        var responseType = config11.responseType;
         var onCanceled;
         function done() {
-          if (config10.cancelToken) {
-            config10.cancelToken.unsubscribe(onCanceled);
+          if (config11.cancelToken) {
+            config11.cancelToken.unsubscribe(onCanceled);
           }
-          if (config10.signal) {
-            config10.signal.removeEventListener("abort", onCanceled);
+          if (config11.signal) {
+            config11.signal.removeEventListener("abort", onCanceled);
           }
         }
         if (utils.isFormData(requestData)) {
           delete requestHeaders["Content-Type"];
         }
         var request3 = new XMLHttpRequest();
-        if (config10.auth) {
-          var username = config10.auth.username || "";
-          var password = config10.auth.password ? unescape(encodeURIComponent(config10.auth.password)) : "";
+        if (config11.auth) {
+          var username = config11.auth.username || "";
+          var password = config11.auth.password ? unescape(encodeURIComponent(config11.auth.password)) : "";
           requestHeaders.Authorization = "Basic " + btoa(username + ":" + password);
         }
-        var fullPath = buildFullPath2(config10.baseURL, config10.url);
-        request3.open(config10.method.toUpperCase(), buildURL2(fullPath, config10.params, config10.paramsSerializer), true);
-        request3.timeout = config10.timeout;
+        var fullPath = buildFullPath2(config11.baseURL, config11.url);
+        request3.open(config11.method.toUpperCase(), buildURL2(fullPath, config11.params, config11.paramsSerializer), true);
+        request3.timeout = config11.timeout;
         function onloadend() {
           if (!request3) {
             return;
@@ -25825,7 +25825,7 @@ var require_xhr = __commonJS({
             status: request3.status,
             statusText: request3.statusText,
             headers: responseHeaders,
-            config: config10,
+            config: config11,
             request: request3
           };
           settle2(function _resolve(value) {
@@ -25854,31 +25854,31 @@ var require_xhr = __commonJS({
           if (!request3) {
             return;
           }
-          reject(createError("Request aborted", config10, "ECONNABORTED", request3));
+          reject(createError("Request aborted", config11, "ECONNABORTED", request3));
           request3 = null;
         };
         request3.onerror = function handleError() {
-          reject(createError("Network Error", config10, null, request3));
+          reject(createError("Network Error", config11, null, request3));
           request3 = null;
         };
         request3.ontimeout = function handleTimeout() {
-          var timeoutErrorMessage = config10.timeout ? "timeout of " + config10.timeout + "ms exceeded" : "timeout exceeded";
-          var transitional2 = config10.transitional || transitionalDefaults;
-          if (config10.timeoutErrorMessage) {
-            timeoutErrorMessage = config10.timeoutErrorMessage;
+          var timeoutErrorMessage = config11.timeout ? "timeout of " + config11.timeout + "ms exceeded" : "timeout exceeded";
+          var transitional2 = config11.transitional || transitionalDefaults;
+          if (config11.timeoutErrorMessage) {
+            timeoutErrorMessage = config11.timeoutErrorMessage;
           }
           reject(createError(
             timeoutErrorMessage,
-            config10,
+            config11,
             transitional2.clarifyTimeoutError ? "ETIMEDOUT" : "ECONNABORTED",
             request3
           ));
           request3 = null;
         };
         if (utils.isStandardBrowserEnv()) {
-          var xsrfValue = (config10.withCredentials || isURLSameOrigin(fullPath)) && config10.xsrfCookieName ? cookies.read(config10.xsrfCookieName) : void 0;
+          var xsrfValue = (config11.withCredentials || isURLSameOrigin(fullPath)) && config11.xsrfCookieName ? cookies.read(config11.xsrfCookieName) : void 0;
           if (xsrfValue) {
-            requestHeaders[config10.xsrfHeaderName] = xsrfValue;
+            requestHeaders[config11.xsrfHeaderName] = xsrfValue;
           }
         }
         if ("setRequestHeader" in request3) {
@@ -25890,19 +25890,19 @@ var require_xhr = __commonJS({
             }
           });
         }
-        if (!utils.isUndefined(config10.withCredentials)) {
-          request3.withCredentials = !!config10.withCredentials;
+        if (!utils.isUndefined(config11.withCredentials)) {
+          request3.withCredentials = !!config11.withCredentials;
         }
         if (responseType && responseType !== "json") {
-          request3.responseType = config10.responseType;
+          request3.responseType = config11.responseType;
         }
-        if (typeof config10.onDownloadProgress === "function") {
-          request3.addEventListener("progress", config10.onDownloadProgress);
+        if (typeof config11.onDownloadProgress === "function") {
+          request3.addEventListener("progress", config11.onDownloadProgress);
         }
-        if (typeof config10.onUploadProgress === "function" && request3.upload) {
-          request3.upload.addEventListener("progress", config10.onUploadProgress);
+        if (typeof config11.onUploadProgress === "function" && request3.upload) {
+          request3.upload.addEventListener("progress", config11.onUploadProgress);
         }
-        if (config10.cancelToken || config10.signal) {
+        if (config11.cancelToken || config11.signal) {
           onCanceled = function(cancel) {
             if (!request3) {
               return;
@@ -25911,9 +25911,9 @@ var require_xhr = __commonJS({
             request3.abort();
             request3 = null;
           };
-          config10.cancelToken && config10.cancelToken.subscribe(onCanceled);
-          if (config10.signal) {
-            config10.signal.aborted ? onCanceled() : config10.signal.addEventListener("abort", onCanceled);
+          config11.cancelToken && config11.cancelToken.subscribe(onCanceled);
+          if (config11.signal) {
+            config11.signal.aborted ? onCanceled() : config11.signal.addEventListener("abort", onCanceled);
           }
         }
         if (!requestData) {
@@ -27209,15 +27209,15 @@ var require_http = __commonJS({
         setProxy2(redirection, proxy, redirection.href);
       };
     }
-    module2.exports = function httpAdapter2(config10) {
+    module2.exports = function httpAdapter2(config11) {
       return new Promise(function dispatchHttpRequest(resolvePromise, rejectPromise) {
         var onCanceled;
         function done() {
-          if (config10.cancelToken) {
-            config10.cancelToken.unsubscribe(onCanceled);
+          if (config11.cancelToken) {
+            config11.cancelToken.unsubscribe(onCanceled);
           }
-          if (config10.signal) {
-            config10.signal.removeEventListener("abort", onCanceled);
+          if (config11.signal) {
+            config11.signal.removeEventListener("abort", onCanceled);
           }
         }
         var resolve = function resolve2(value) {
@@ -27230,8 +27230,8 @@ var require_http = __commonJS({
           rejected = true;
           rejectPromise(value);
         };
-        var data = config10.data;
-        var headers = config10.headers;
+        var data = config11.data;
+        var headers = config11.headers;
         var headerNames = {};
         Object.keys(headers).forEach(function storeLowerName(name) {
           headerNames[name.toLowerCase()] = name;
@@ -27252,23 +27252,23 @@ var require_http = __commonJS({
           } else {
             return reject(createError(
               "Data after transformation must be a string, an ArrayBuffer, a Buffer, or a Stream",
-              config10
+              config11
             ));
           }
-          if (config10.maxBodyLength > -1 && data.length > config10.maxBodyLength) {
-            return reject(createError("Request body larger than maxBodyLength limit", config10));
+          if (config11.maxBodyLength > -1 && data.length > config11.maxBodyLength) {
+            return reject(createError("Request body larger than maxBodyLength limit", config11));
           }
           if (!headerNames["content-length"]) {
             headers["Content-Length"] = data.length;
           }
         }
         var auth = void 0;
-        if (config10.auth) {
-          var username = config10.auth.username || "";
-          var password = config10.auth.password || "";
+        if (config11.auth) {
+          var username = config11.auth.username || "";
+          var password = config11.auth.password || "";
           auth = username + ":" + password;
         }
-        var fullPath = buildFullPath2(config10.baseURL, config10.url);
+        var fullPath = buildFullPath2(config11.baseURL, config11.url);
         var parsed = url2.parse(fullPath);
         var protocol = parsed.protocol || "http:";
         if (!auth && parsed.auth) {
@@ -27281,31 +27281,31 @@ var require_http = __commonJS({
           delete headers[headerNames.authorization];
         }
         var isHttpsRequest = isHttps2.test(protocol);
-        var agent = isHttpsRequest ? config10.httpsAgent : config10.httpAgent;
+        var agent = isHttpsRequest ? config11.httpsAgent : config11.httpAgent;
         try {
-          buildURL2(parsed.path, config10.params, config10.paramsSerializer).replace(/^\?/, "");
+          buildURL2(parsed.path, config11.params, config11.paramsSerializer).replace(/^\?/, "");
         } catch (err) {
           var customErr = new Error(err.message);
-          customErr.config = config10;
-          customErr.url = config10.url;
+          customErr.config = config11;
+          customErr.url = config11.url;
           customErr.exists = true;
           reject(customErr);
         }
         var options = {
-          path: buildURL2(parsed.path, config10.params, config10.paramsSerializer).replace(/^\?/, ""),
-          method: config10.method.toUpperCase(),
+          path: buildURL2(parsed.path, config11.params, config11.paramsSerializer).replace(/^\?/, ""),
+          method: config11.method.toUpperCase(),
           headers,
           agent,
-          agents: { http: config10.httpAgent, https: config10.httpsAgent },
+          agents: { http: config11.httpAgent, https: config11.httpsAgent },
           auth
         };
-        if (config10.socketPath) {
-          options.socketPath = config10.socketPath;
+        if (config11.socketPath) {
+          options.socketPath = config11.socketPath;
         } else {
           options.hostname = parsed.hostname;
           options.port = parsed.port;
         }
-        var proxy = config10.proxy;
+        var proxy = config11.proxy;
         if (!proxy && proxy !== false) {
           var proxyEnv = protocol.slice(0, -1) + "_proxy";
           var proxyUrl = process.env[proxyEnv] || process.env[proxyEnv.toUpperCase()];
@@ -27352,28 +27352,28 @@ var require_http = __commonJS({
         }
         var transport;
         var isHttpsProxy = isHttpsRequest && (proxy ? isHttps2.test(proxy.protocol) : true);
-        if (config10.transport) {
-          transport = config10.transport;
-        } else if (config10.maxRedirects === 0) {
+        if (config11.transport) {
+          transport = config11.transport;
+        } else if (config11.maxRedirects === 0) {
           transport = isHttpsProxy ? https3 : http3;
         } else {
-          if (config10.maxRedirects) {
-            options.maxRedirects = config10.maxRedirects;
+          if (config11.maxRedirects) {
+            options.maxRedirects = config11.maxRedirects;
           }
           transport = isHttpsProxy ? httpsFollow2 : httpFollow2;
         }
-        if (config10.maxBodyLength > -1) {
-          options.maxBodyLength = config10.maxBodyLength;
+        if (config11.maxBodyLength > -1) {
+          options.maxBodyLength = config11.maxBodyLength;
         }
-        if (config10.insecureHTTPParser) {
-          options.insecureHTTPParser = config10.insecureHTTPParser;
+        if (config11.insecureHTTPParser) {
+          options.insecureHTTPParser = config11.insecureHTTPParser;
         }
         var req = transport.request(options, function handleResponse(res) {
           if (req.aborted)
             return;
           var stream4 = res;
           var lastRequest = res.req || req;
-          if (res.statusCode !== 204 && lastRequest.method !== "HEAD" && config10.decompress !== false) {
+          if (res.statusCode !== 204 && lastRequest.method !== "HEAD" && config11.decompress !== false) {
             switch (res.headers["content-encoding"]) {
               case "gzip":
               case "compress":
@@ -27387,10 +27387,10 @@ var require_http = __commonJS({
             status: res.statusCode,
             statusText: res.statusMessage,
             headers: res.headers,
-            config: config10,
+            config: config11,
             request: lastRequest
           };
-          if (config10.responseType === "stream") {
+          if (config11.responseType === "stream") {
             response.data = stream4;
             settle2(resolve, reject, response);
           } else {
@@ -27399,12 +27399,12 @@ var require_http = __commonJS({
             stream4.on("data", function handleStreamData(chunk) {
               responseBuffer.push(chunk);
               totalResponseBytes += chunk.length;
-              if (config10.maxContentLength > -1 && totalResponseBytes > config10.maxContentLength) {
+              if (config11.maxContentLength > -1 && totalResponseBytes > config11.maxContentLength) {
                 rejected = true;
                 stream4.destroy();
                 reject(createError(
-                  "maxContentLength size of " + config10.maxContentLength + " exceeded",
-                  config10,
+                  "maxContentLength size of " + config11.maxContentLength + " exceeded",
+                  config11,
                   null,
                   lastRequest
                 ));
@@ -27415,25 +27415,25 @@ var require_http = __commonJS({
                 return;
               }
               stream4.destroy();
-              reject(createError("error request aborted", config10, "ERR_REQUEST_ABORTED", lastRequest));
+              reject(createError("error request aborted", config11, "ERR_REQUEST_ABORTED", lastRequest));
             });
             stream4.on("error", function handleStreamError(err) {
               if (req.aborted)
                 return;
-              reject(enhanceError(err, config10, null, lastRequest));
+              reject(enhanceError(err, config11, null, lastRequest));
             });
             stream4.on("end", function handleStreamEnd() {
               try {
                 var responseData = responseBuffer.length === 1 ? responseBuffer[0] : Buffer.concat(responseBuffer);
-                if (config10.responseType !== "arraybuffer") {
-                  responseData = responseData.toString(config10.responseEncoding);
-                  if (!config10.responseEncoding || config10.responseEncoding === "utf8") {
+                if (config11.responseType !== "arraybuffer") {
+                  responseData = responseData.toString(config11.responseEncoding);
+                  if (!config11.responseEncoding || config11.responseEncoding === "utf8") {
                     responseData = utils.stripBOM(responseData);
                   }
                 }
                 response.data = responseData;
               } catch (err) {
-                reject(enhanceError(err, config10, err.code, response.request, response));
+                reject(enhanceError(err, config11, err.code, response.request, response));
               }
               settle2(resolve, reject, response);
             });
@@ -27442,17 +27442,17 @@ var require_http = __commonJS({
         req.on("error", function handleRequestError(err) {
           if (req.aborted && err.code !== "ERR_FR_TOO_MANY_REDIRECTS")
             return;
-          reject(enhanceError(err, config10, null, req));
+          reject(enhanceError(err, config11, null, req));
         });
         req.on("socket", function handleRequestSocket(socket) {
           socket.setKeepAlive(true, 1e3 * 60);
         });
-        if (config10.timeout) {
-          var timeout = parseInt(config10.timeout, 10);
+        if (config11.timeout) {
+          var timeout = parseInt(config11.timeout, 10);
           if (isNaN(timeout)) {
             reject(createError(
               "error trying to parse `config.timeout` to int",
-              config10,
+              config11,
               "ERR_PARSE_TIMEOUT",
               req
             ));
@@ -27461,35 +27461,35 @@ var require_http = __commonJS({
           req.setTimeout(timeout, function handleRequestTimeout() {
             req.abort();
             var timeoutErrorMessage = "";
-            if (config10.timeoutErrorMessage) {
-              timeoutErrorMessage = config10.timeoutErrorMessage;
+            if (config11.timeoutErrorMessage) {
+              timeoutErrorMessage = config11.timeoutErrorMessage;
             } else {
-              timeoutErrorMessage = "timeout of " + config10.timeout + "ms exceeded";
+              timeoutErrorMessage = "timeout of " + config11.timeout + "ms exceeded";
             }
-            var transitional2 = config10.transitional || transitionalDefaults;
+            var transitional2 = config11.transitional || transitionalDefaults;
             reject(createError(
               timeoutErrorMessage,
-              config10,
+              config11,
               transitional2.clarifyTimeoutError ? "ETIMEDOUT" : "ECONNABORTED",
               req
             ));
           });
         }
-        if (config10.cancelToken || config10.signal) {
+        if (config11.cancelToken || config11.signal) {
           onCanceled = function(cancel) {
             if (req.aborted)
               return;
             req.abort();
             reject(!cancel || cancel && cancel.type ? new Cancel2("canceled") : cancel);
           };
-          config10.cancelToken && config10.cancelToken.subscribe(onCanceled);
-          if (config10.signal) {
-            config10.signal.aborted ? onCanceled() : config10.signal.addEventListener("abort", onCanceled);
+          config11.cancelToken && config11.cancelToken.subscribe(onCanceled);
+          if (config11.signal) {
+            config11.signal.aborted ? onCanceled() : config11.signal.addEventListener("abort", onCanceled);
           }
         }
         if (utils.isStream(data)) {
           data.on("error", function handleStreamError(err) {
-            reject(enhanceError(err, config10, null, req));
+            reject(enhanceError(err, config11, null, req));
           }).pipe(req);
         } else {
           req.end(data);
@@ -27637,53 +27637,53 @@ var require_dispatchRequest = __commonJS({
     var isCancel3 = require_isCancel();
     var defaults2 = require_defaults();
     var Cancel2 = require_Cancel();
-    function throwIfCancellationRequested2(config10) {
-      if (config10.cancelToken) {
-        config10.cancelToken.throwIfRequested();
+    function throwIfCancellationRequested2(config11) {
+      if (config11.cancelToken) {
+        config11.cancelToken.throwIfRequested();
       }
-      if (config10.signal && config10.signal.aborted) {
+      if (config11.signal && config11.signal.aborted) {
         throw new Cancel2("canceled");
       }
     }
-    module2.exports = function dispatchRequest2(config10) {
-      throwIfCancellationRequested2(config10);
-      config10.headers = config10.headers || {};
-      config10.data = transformData2.call(
-        config10,
-        config10.data,
-        config10.headers,
-        config10.transformRequest
+    module2.exports = function dispatchRequest2(config11) {
+      throwIfCancellationRequested2(config11);
+      config11.headers = config11.headers || {};
+      config11.data = transformData2.call(
+        config11,
+        config11.data,
+        config11.headers,
+        config11.transformRequest
       );
-      config10.headers = utils.merge(
-        config10.headers.common || {},
-        config10.headers[config10.method] || {},
-        config10.headers
+      config11.headers = utils.merge(
+        config11.headers.common || {},
+        config11.headers[config11.method] || {},
+        config11.headers
       );
       utils.forEach(
         ["delete", "get", "head", "post", "put", "patch", "common"],
         function cleanHeaderConfig(method) {
-          delete config10.headers[method];
+          delete config11.headers[method];
         }
       );
-      var adapter = config10.adapter || defaults2.adapter;
-      return adapter(config10).then(function onAdapterResolution(response) {
-        throwIfCancellationRequested2(config10);
+      var adapter = config11.adapter || defaults2.adapter;
+      return adapter(config11).then(function onAdapterResolution(response) {
+        throwIfCancellationRequested2(config11);
         response.data = transformData2.call(
-          config10,
+          config11,
           response.data,
           response.headers,
-          config10.transformResponse
+          config11.transformResponse
         );
         return response;
       }, function onAdapterRejection(reason) {
         if (!isCancel3(reason)) {
-          throwIfCancellationRequested2(config10);
+          throwIfCancellationRequested2(config11);
           if (reason && reason.response) {
             reason.response.data = transformData2.call(
-              config10,
+              config11,
               reason.response.data,
               reason.response.headers,
-              config10.transformResponse
+              config11.transformResponse
             );
           }
         }
@@ -27700,7 +27700,7 @@ var require_mergeConfig = __commonJS({
     var utils = require_utils6();
     module2.exports = function mergeConfig3(config1, config22) {
       config22 = config22 || {};
-      var config10 = {};
+      var config11 = {};
       function getMergedValue(target, source) {
         if (utils.isPlainObject(target) && utils.isPlainObject(source)) {
           return utils.merge(target, source);
@@ -27768,9 +27768,9 @@ var require_mergeConfig = __commonJS({
       utils.forEach(Object.keys(config1).concat(Object.keys(config22)), function computeConfigValue(prop) {
         var merge2 = mergeMap[prop] || mergeDeepProperties;
         var configValue = merge2(prop);
-        utils.isUndefined(configValue) && merge2 !== mergeDirectKeys || (config10[prop] = configValue);
+        utils.isUndefined(configValue) && merge2 !== mergeDirectKeys || (config11[prop] = configValue);
       });
-      return config10;
+      return config11;
     };
   }
 });
@@ -27854,22 +27854,22 @@ var require_Axios = __commonJS({
         response: new InterceptorManager2()
       };
     }
-    Axios3.prototype.request = function request3(configOrUrl, config10) {
+    Axios3.prototype.request = function request3(configOrUrl, config11) {
       if (typeof configOrUrl === "string") {
-        config10 = config10 || {};
-        config10.url = configOrUrl;
+        config11 = config11 || {};
+        config11.url = configOrUrl;
       } else {
-        config10 = configOrUrl || {};
+        config11 = configOrUrl || {};
       }
-      config10 = mergeConfig3(this.defaults, config10);
-      if (config10.method) {
-        config10.method = config10.method.toLowerCase();
+      config11 = mergeConfig3(this.defaults, config11);
+      if (config11.method) {
+        config11.method = config11.method.toLowerCase();
       } else if (this.defaults.method) {
-        config10.method = this.defaults.method.toLowerCase();
+        config11.method = this.defaults.method.toLowerCase();
       } else {
-        config10.method = "get";
+        config11.method = "get";
       }
-      var transitional2 = config10.transitional;
+      var transitional2 = config11.transitional;
       if (transitional2 !== void 0) {
         validator.assertOptions(transitional2, {
           silentJSONParsing: validators3.transitional(validators3.boolean),
@@ -27880,7 +27880,7 @@ var require_Axios = __commonJS({
       var requestInterceptorChain = [];
       var synchronousRequestInterceptors = true;
       this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
-        if (typeof interceptor.runWhen === "function" && interceptor.runWhen(config10) === false) {
+        if (typeof interceptor.runWhen === "function" && interceptor.runWhen(config11) === false) {
           return;
         }
         synchronousRequestInterceptors = synchronousRequestInterceptors && interceptor.synchronous;
@@ -27895,13 +27895,13 @@ var require_Axios = __commonJS({
         var chain = [dispatchRequest2, void 0];
         Array.prototype.unshift.apply(chain, requestInterceptorChain);
         chain = chain.concat(responseInterceptorChain);
-        promise = Promise.resolve(config10);
+        promise = Promise.resolve(config11);
         while (chain.length) {
           promise = promise.then(chain.shift(), chain.shift());
         }
         return promise;
       }
-      var newConfig = config10;
+      var newConfig = config11;
       while (requestInterceptorChain.length) {
         var onFulfilled = requestInterceptorChain.shift();
         var onRejected = requestInterceptorChain.shift();
@@ -27922,22 +27922,22 @@ var require_Axios = __commonJS({
       }
       return promise;
     };
-    Axios3.prototype.getUri = function getUri(config10) {
-      config10 = mergeConfig3(this.defaults, config10);
-      return buildURL2(config10.url, config10.params, config10.paramsSerializer).replace(/^\?/, "");
+    Axios3.prototype.getUri = function getUri(config11) {
+      config11 = mergeConfig3(this.defaults, config11);
+      return buildURL2(config11.url, config11.params, config11.paramsSerializer).replace(/^\?/, "");
     };
     utils.forEach(["delete", "get", "head", "options"], function forEachMethodNoData2(method) {
-      Axios3.prototype[method] = function(url2, config10) {
-        return this.request(mergeConfig3(config10 || {}, {
+      Axios3.prototype[method] = function(url2, config11) {
+        return this.request(mergeConfig3(config11 || {}, {
           method,
           url: url2,
-          data: (config10 || {}).data
+          data: (config11 || {}).data
         }));
       };
     });
     utils.forEach(["post", "put", "patch"], function forEachMethodWithData2(method) {
-      Axios3.prototype[method] = function(url2, data, config10) {
-        return this.request(mergeConfig3(config10 || {}, {
+      Axios3.prototype[method] = function(url2, data, config11) {
+        return this.request(mergeConfig3(config11 || {}, {
           method,
           url: url2,
           data
@@ -39072,7 +39072,7 @@ var require_main2 = __commonJS({
         return { parsed: parsedAll };
       }
     }
-    function config10(options) {
+    function config11(options) {
       if (_dotenvKey(options).length === 0) {
         return DotenvModule.configDotenv(options);
       }
@@ -39139,7 +39139,7 @@ var require_main2 = __commonJS({
       configDotenv,
       _configVault,
       _parseVault,
-      config: config10,
+      config: config11,
       decrypt,
       parse,
       populate
@@ -49625,31 +49625,31 @@ var validateConfig = (key, condition, validationMessage) => {
   }
 };
 var configValidators = {
-  ["OCO_OPENAI_API_KEY" /* OCO_OPENAI_API_KEY */](value, config10 = {}) {
+  ["OCO_OPENAI_API_KEY" /* OCO_OPENAI_API_KEY */](value, config11 = {}) {
     validateConfig(
       "OpenAI API_KEY",
-      value || config10.OCO_ANTHROPIC_API_KEY || config10.OCO_AI_PROVIDER.startsWith("ollama") || config10.OCO_AZURE_API_KEY || config10.OCO_AI_PROVIDER == "test" || config10.OCO_AI_PROVIDER == "flowise",
+      value || config11.OCO_ANTHROPIC_API_KEY || config11.OCO_AI_PROVIDER.startsWith("ollama") || config11.OCO_AZURE_API_KEY || config11.OCO_AI_PROVIDER == "test" || config11.OCO_AI_PROVIDER == "flowise",
       "You need to provide an OpenAI/Anthropic/Azure API key"
     );
     validateConfig(
       "OCO_OPENAI_API_KEY" /* OCO_OPENAI_API_KEY */,
-      value.startsWith("sk-") || config10.OCO_AI_PROVIDER != "openai",
+      value.startsWith("sk-") || config11.OCO_AI_PROVIDER != "openai",
       'Must start with "sk-" for openai provider'
     );
     return value;
   },
-  ["OCO_AZURE_API_KEY" /* OCO_AZURE_API_KEY */](value, config10 = {}) {
+  ["OCO_AZURE_API_KEY" /* OCO_AZURE_API_KEY */](value, config11 = {}) {
     validateConfig(
       "ANTHROPIC_API_KEY",
-      value || config10.OCO_OPENAI_API_KEY || config10.OCO_AZURE_API_KEY || config10.OCO_AI_PROVIDER == "ollama" || config10.OCO_AI_PROVIDER == "test",
+      value || config11.OCO_OPENAI_API_KEY || config11.OCO_AZURE_API_KEY || config11.OCO_AI_PROVIDER == "ollama" || config11.OCO_AI_PROVIDER == "test" || config11.OCO_AI_PROVIDER == "flowise",
       "You need to provide an OpenAI/Anthropic/Azure API key"
     );
     return value;
   },
-  ["OCO_ANTHROPIC_API_KEY" /* OCO_ANTHROPIC_API_KEY */](value, config10 = {}) {
+  ["OCO_ANTHROPIC_API_KEY" /* OCO_ANTHROPIC_API_KEY */](value, config11 = {}) {
     validateConfig(
       "ANTHROPIC_API_KEY",
-      value || config10.OCO_OPENAI_API_KEY || config10.OCO_AI_PROVIDER == "ollama" || config10.OCO_AI_PROVIDER == "test",
+      value || config11.OCO_OPENAI_API_KEY || config11.OCO_AI_PROVIDER == "ollama" || config11.OCO_AI_PROVIDER == "test" || config11.OCO_AI_PROVIDER == "flowise",
       "You need to provide an OpenAI/Anthropic/Azure API key"
     );
     return value;
@@ -49718,15 +49718,15 @@ var configValidators = {
     );
     return value;
   },
-  ["OCO_MODEL" /* OCO_MODEL */](value, config10 = {}) {
+  ["OCO_MODEL" /* OCO_MODEL */](value, config11 = {}) {
     validateConfig(
       "OCO_MODEL" /* OCO_MODEL */,
-      [...MODEL_LIST.openai, ...MODEL_LIST.anthropic].includes(value) || config10.OCO_AI_PROVIDER == "ollama" || config10.OCO_AI_PROVIDER == "test" || config10.OCO_AI_PROVIDER == "azure",
+      [...MODEL_LIST.openai, ...MODEL_LIST.anthropic].includes(value) || config11.OCO_AI_PROVIDER == "ollama" || config11.OCO_AI_PROVIDER == "test" || config11.OCO_AI_PROVIDER == "azure" || config11.OCO_AI_PROVIDER == "flowise",
       `${value} is not supported yet, use 'gpt-4o', 'gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo' (default), 'gpt-3.5-turbo-0125', 'gpt-4-1106-preview', 'gpt-4-turbo-preview', 'gpt-4-0125-preview', 'claude-3-opus-20240229', 'claude-3-sonnet-20240229' or 'claude-3-haiku-20240307'`
     );
     validateConfig(
       "OCO_MODEL" /* OCO_MODEL */,
-      typeof value === "string" && value.match(/^[a-zA-Z0-9~\-]{1,63}[a-zA-Z0-9]$/) || config10.OCO_AI_PROVIDER != "azure",
+      typeof value === "string" && value.match(/^[a-zA-Z0-9~\-]{1,63}[a-zA-Z0-9]$/) || config11.OCO_AI_PROVIDER != "azure",
       `${value} is not model deployed name.`
     );
     return value;
@@ -49767,7 +49767,7 @@ var configValidators = {
         "test",
         "flowise"
       ].includes(value) || value.startsWith("ollama"),
-      `${value} is not supported yet, use 'ollama/{model}', 'azure', 'anthropic' or 'openai' (default)`
+      `${value} is not supported yet, use 'ollama/{model}', 'azure', 'anthropic', flowise, or 'openai' (default)`
     );
     return value;
   },
@@ -49817,19 +49817,19 @@ var getConfig = ({
   if (!configExists)
     return configFromEnv;
   const configFile = (0, import_fs.readFileSync)(configPath, "utf8");
-  const config10 = (0, import_ini.parse)(configFile);
-  for (const configKey of Object.keys(config10)) {
-    if (["null", "undefined"].includes(config10[configKey])) {
-      config10[configKey] = void 0;
+  const config11 = (0, import_ini.parse)(configFile);
+  for (const configKey of Object.keys(config11)) {
+    if (["null", "undefined"].includes(config11[configKey])) {
+      config11[configKey] = void 0;
       continue;
     }
     try {
       const validator = configValidators[configKey];
       const validValue = validator(
-        config10[configKey] ?? configFromEnv[configKey],
-        config10
+        config11[configKey] ?? configFromEnv[configKey],
+        config11
       );
-      config10[configKey] = validValue;
+      config11[configKey] = validValue;
     } catch (error) {
       ce(`Unknown '${configKey}' config option or missing validator.`);
       ce(
@@ -49838,10 +49838,10 @@ var getConfig = ({
       process.exit(1);
     }
   }
-  return config10;
+  return config11;
 };
 var setConfig = (keyValues, configPath = defaultConfigPath) => {
-  const config10 = getConfig() || {};
+  const config11 = getConfig() || {};
   for (const [configKey, configValue] of keyValues) {
     if (!configValidators.hasOwnProperty(configKey)) {
       throw new Error(`Unsupported config key: ${configKey}`);
@@ -49853,9 +49853,9 @@ var setConfig = (keyValues, configPath = defaultConfigPath) => {
       parsedConfigValue = configValue;
     }
     const validValue = configValidators[configKey](parsedConfigValue);
-    config10[configKey] = validValue;
+    config11[configKey] = validValue;
   }
-  (0, import_fs.writeFileSync)(configPath, (0, import_ini.stringify)(config10), "utf8");
+  (0, import_fs.writeFileSync)(configPath, (0, import_ini.stringify)(config11), "utf8");
   ce(`${source_default.green("\u2714")} Config successfully set`);
 };
 var configCommand = G2(
@@ -49868,9 +49868,9 @@ var configCommand = G2(
     try {
       const { mode: mode4, keyValues } = argv._;
       if (mode4 === "get" /* get */) {
-        const config10 = getConfig() || {};
+        const config11 = getConfig() || {};
         for (const key of keyValues) {
-          ce(`${key}=${config10[key]}`);
+          ce(`${key}=${config11[key]}`);
         }
       } else if (mode4 === "set" /* set */) {
         await setConfig(
@@ -49979,8 +49979,8 @@ var getPrompt = (ruleName, ruleConfig, prompt) => {
   ce(`${source_default.red("\u2716")} No prompt handler for rule "${ruleName}".`);
   return `Please manualy set the prompt for rule "${ruleName}".`;
 };
-var inferPromptsFromCommitlintConfig = (config10) => {
-  const { rules, prompt } = config10;
+var inferPromptsFromCommitlintConfig = (config11) => {
+  const { rules, prompt } = config11;
   if (!rules)
     return [];
   return Object.keys(rules).map(
@@ -50474,7 +50474,7 @@ var utils_default = {
 };
 
 // node_modules/.pnpm/axios@1.7.2/node_modules/axios/lib/core/AxiosError.js
-function AxiosError(message, code, config10, request3, response) {
+function AxiosError(message, code, config11, request3, response) {
   Error.call(this);
   if (Error.captureStackTrace) {
     Error.captureStackTrace(this, this.constructor);
@@ -50484,7 +50484,7 @@ function AxiosError(message, code, config10, request3, response) {
   this.message = message;
   this.name = "AxiosError";
   code && (this.code = code);
-  config10 && (this.config = config10);
+  config11 && (this.config = config11);
   request3 && (this.request = request3);
   response && (this.response = response);
 }
@@ -50525,14 +50525,14 @@ var descriptors = {};
 });
 Object.defineProperties(AxiosError, descriptors);
 Object.defineProperty(prototype, "isAxiosError", { value: true });
-AxiosError.from = (error, code, config10, request3, response, customProps) => {
+AxiosError.from = (error, code, config11, request3, response, customProps) => {
   const axiosError = Object.create(prototype);
   utils_default.toFlatObject(error, axiosError, function filter2(obj) {
     return obj !== Error.prototype;
   }, (prop) => {
     return prop !== "isAxiosError";
   });
-  AxiosError.call(axiosError, error.message, code, config10, request3, response);
+  AxiosError.call(axiosError, error.message, code, config11, request3, response);
   axiosError.cause = error;
   axiosError.name = error.name;
   customProps && Object.assign(axiosError, customProps);
@@ -51237,12 +51237,12 @@ var AxiosHeaders_default = AxiosHeaders;
 
 // node_modules/.pnpm/axios@1.7.2/node_modules/axios/lib/core/transformData.js
 function transformData(fns, response) {
-  const config10 = this || defaults_default;
-  const context2 = response || config10;
+  const config11 = this || defaults_default;
+  const context2 = response || config11;
   const headers = AxiosHeaders_default.from(context2.headers);
   let data = context2.data;
   utils_default.forEach(fns, function transform(fn) {
-    data = fn.call(config10, data, headers.normalize(), response ? response.status : void 0);
+    data = fn.call(config11, data, headers.normalize(), response ? response.status : void 0);
   });
   headers.normalize();
   return data;
@@ -51254,8 +51254,8 @@ function isCancel(value) {
 }
 
 // node_modules/.pnpm/axios@1.7.2/node_modules/axios/lib/cancel/CanceledError.js
-function CanceledError(message, config10, request3) {
-  AxiosError_default.call(this, message == null ? "canceled" : message, AxiosError_default.ERR_CANCELED, config10, request3);
+function CanceledError(message, config11, request3) {
+  AxiosError_default.call(this, message == null ? "canceled" : message, AxiosError_default.ERR_CANCELED, config11, request3);
   this.name = "CanceledError";
 }
 utils_default.inherits(CanceledError, AxiosError_default, {
@@ -51789,11 +51789,11 @@ var resolveFamily = ({ address, family }) => {
   };
 };
 var buildAddressEntry = (address, family) => resolveFamily(utils_default.isObject(address) ? address : { address, family });
-var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
+var http_default = isHttpAdapterSupported && function httpAdapter(config11) {
   return wrapAsync(async function dispatchHttpRequest(resolve, reject, onDone) {
-    let { data, lookup, family } = config10;
-    const { responseType, responseEncoding } = config10;
-    const method = config10.method.toUpperCase();
+    let { data, lookup, family } = config11;
+    const { responseType, responseEncoding } = config11;
+    const method = config11.method.toUpperCase();
     let isDone;
     let rejected = false;
     let req;
@@ -51811,11 +51811,11 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
     }
     const emitter = new import_events.EventEmitter();
     const onFinished = () => {
-      if (config10.cancelToken) {
-        config10.cancelToken.unsubscribe(abort);
+      if (config11.cancelToken) {
+        config11.cancelToken.unsubscribe(abort);
       }
-      if (config10.signal) {
-        config10.signal.removeEventListener("abort", abort);
+      if (config11.signal) {
+        config11.signal.removeEventListener("abort", abort);
       }
       emitter.removeAllListeners();
     };
@@ -51827,16 +51827,16 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
       }
     });
     function abort(reason) {
-      emitter.emit("abort", !reason || reason.type ? new CanceledError_default(null, config10, req) : reason);
+      emitter.emit("abort", !reason || reason.type ? new CanceledError_default(null, config11, req) : reason);
     }
     emitter.once("abort", reject);
-    if (config10.cancelToken || config10.signal) {
-      config10.cancelToken && config10.cancelToken.subscribe(abort);
-      if (config10.signal) {
-        config10.signal.aborted ? abort() : config10.signal.addEventListener("abort", abort);
+    if (config11.cancelToken || config11.signal) {
+      config11.cancelToken && config11.cancelToken.subscribe(abort);
+      if (config11.signal) {
+        config11.signal.aborted ? abort() : config11.signal.addEventListener("abort", abort);
       }
     }
-    const fullPath = buildFullPath(config10.baseURL, config10.url);
+    const fullPath = buildFullPath(config11.baseURL, config11.url);
     const parsed = new URL(fullPath, "http://localhost");
     const protocol = parsed.protocol || supportedProtocols[0];
     if (protocol === "data:") {
@@ -51846,15 +51846,15 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
           status: 405,
           statusText: "method not allowed",
           headers: {},
-          config: config10
+          config: config11
         });
       }
       try {
-        convertedData = fromDataURI(config10.url, responseType === "blob", {
-          Blob: config10.env && config10.env.Blob
+        convertedData = fromDataURI(config11.url, responseType === "blob", {
+          Blob: config11.env && config11.env.Blob
         });
       } catch (err) {
-        throw AxiosError_default.from(err, AxiosError_default.ERR_BAD_REQUEST, config10);
+        throw AxiosError_default.from(err, AxiosError_default.ERR_BAD_REQUEST, config11);
       }
       if (responseType === "text") {
         convertedData = convertedData.toString(responseEncoding);
@@ -51869,21 +51869,21 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
         status: 200,
         statusText: "OK",
         headers: new AxiosHeaders_default(),
-        config: config10
+        config: config11
       });
     }
     if (supportedProtocols.indexOf(protocol) === -1) {
       return reject(new AxiosError_default(
         "Unsupported protocol " + protocol,
         AxiosError_default.ERR_BAD_REQUEST,
-        config10
+        config11
       ));
     }
-    const headers = AxiosHeaders_default.from(config10.headers).normalize();
+    const headers = AxiosHeaders_default.from(config11.headers).normalize();
     headers.set("User-Agent", "axios/" + VERSION, false);
-    const onDownloadProgress = config10.onDownloadProgress;
-    const onUploadProgress = config10.onUploadProgress;
-    const maxRate = config10.maxRate;
+    const onDownloadProgress = config11.onDownloadProgress;
+    const onUploadProgress = config11.onUploadProgress;
+    const maxRate = config11.maxRate;
     let maxUploadRate = void 0;
     let maxDownloadRate = void 0;
     if (utils_default.isSpecCompliantForm(data)) {
@@ -51917,15 +51917,15 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
         return reject(new AxiosError_default(
           "Data after transformation must be a string, an ArrayBuffer, a Buffer, or a Stream",
           AxiosError_default.ERR_BAD_REQUEST,
-          config10
+          config11
         ));
       }
       headers.setContentLength(data.length, false);
-      if (config10.maxBodyLength > -1 && data.length > config10.maxBodyLength) {
+      if (config11.maxBodyLength > -1 && data.length > config11.maxBodyLength) {
         return reject(new AxiosError_default(
           "Request body larger than maxBodyLength limit",
           AxiosError_default.ERR_BAD_REQUEST,
-          config10
+          config11
         ));
       }
     }
@@ -51951,9 +51951,9 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
       });
     }
     let auth = void 0;
-    if (config10.auth) {
-      const username = config10.auth.username || "";
-      const password = config10.auth.password || "";
+    if (config11.auth) {
+      const username = config11.auth.username || "";
+      const password = config11.auth.password || "";
       auth = username + ":" + password;
     }
     if (!auth && parsed.username) {
@@ -51966,13 +51966,13 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
     try {
       path2 = buildURL(
         parsed.pathname + parsed.search,
-        config10.params,
-        config10.paramsSerializer
+        config11.params,
+        config11.paramsSerializer
       ).replace(/^\?/, "");
     } catch (err) {
       const customErr = new Error(err.message);
-      customErr.config = config10;
-      customErr.url = config10.url;
+      customErr.config = config11;
+      customErr.url = config11.url;
       customErr.exists = true;
       return reject(customErr);
     }
@@ -51985,7 +51985,7 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
       path: path2,
       method,
       headers: headers.toJSON(),
-      agents: { http: config10.httpAgent, https: config10.httpsAgent },
+      agents: { http: config11.httpAgent, https: config11.httpsAgent },
       auth,
       protocol,
       family,
@@ -51993,36 +51993,36 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
       beforeRedirects: {}
     };
     !utils_default.isUndefined(lookup) && (options.lookup = lookup);
-    if (config10.socketPath) {
-      options.socketPath = config10.socketPath;
+    if (config11.socketPath) {
+      options.socketPath = config11.socketPath;
     } else {
       options.hostname = parsed.hostname;
       options.port = parsed.port;
-      setProxy(options, config10.proxy, protocol + "//" + parsed.hostname + (parsed.port ? ":" + parsed.port : "") + options.path);
+      setProxy(options, config11.proxy, protocol + "//" + parsed.hostname + (parsed.port ? ":" + parsed.port : "") + options.path);
     }
     let transport;
     const isHttpsRequest = isHttps.test(options.protocol);
-    options.agent = isHttpsRequest ? config10.httpsAgent : config10.httpAgent;
-    if (config10.transport) {
-      transport = config10.transport;
-    } else if (config10.maxRedirects === 0) {
+    options.agent = isHttpsRequest ? config11.httpsAgent : config11.httpAgent;
+    if (config11.transport) {
+      transport = config11.transport;
+    } else if (config11.maxRedirects === 0) {
       transport = isHttpsRequest ? import_https.default : import_http.default;
     } else {
-      if (config10.maxRedirects) {
-        options.maxRedirects = config10.maxRedirects;
+      if (config11.maxRedirects) {
+        options.maxRedirects = config11.maxRedirects;
       }
-      if (config10.beforeRedirect) {
-        options.beforeRedirects.config = config10.beforeRedirect;
+      if (config11.beforeRedirect) {
+        options.beforeRedirects.config = config11.beforeRedirect;
       }
       transport = isHttpsRequest ? httpsFollow : httpFollow;
     }
-    if (config10.maxBodyLength > -1) {
-      options.maxBodyLength = config10.maxBodyLength;
+    if (config11.maxBodyLength > -1) {
+      options.maxBodyLength = config11.maxBodyLength;
     } else {
       options.maxBodyLength = Infinity;
     }
-    if (config10.insecureHTTPParser) {
-      options.insecureHTTPParser = config10.insecureHTTPParser;
+    if (config11.insecureHTTPParser) {
+      options.insecureHTTPParser = config11.insecureHTTPParser;
     }
     req = transport.request(options, function handleResponse(res) {
       if (req.destroyed)
@@ -52043,7 +52043,7 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
       }
       let responseStream = res;
       const lastRequest = res.req || req;
-      if (config10.decompress !== false && res.headers["content-encoding"]) {
+      if (config11.decompress !== false && res.headers["content-encoding"]) {
         if (method === "HEAD" || res.statusCode === 204) {
           delete res.headers["content-encoding"];
         }
@@ -52076,7 +52076,7 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
         status: res.statusCode,
         statusText: res.statusMessage,
         headers: new AxiosHeaders_default(res.headers),
-        config: config10,
+        config: config11,
         request: lastRequest
       };
       if (responseType === "stream") {
@@ -52088,13 +52088,13 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
         responseStream.on("data", function handleStreamData(chunk) {
           responseBuffer.push(chunk);
           totalResponseBytes += chunk.length;
-          if (config10.maxContentLength > -1 && totalResponseBytes > config10.maxContentLength) {
+          if (config11.maxContentLength > -1 && totalResponseBytes > config11.maxContentLength) {
             rejected = true;
             responseStream.destroy();
             reject(new AxiosError_default(
-              "maxContentLength size of " + config10.maxContentLength + " exceeded",
+              "maxContentLength size of " + config11.maxContentLength + " exceeded",
               AxiosError_default.ERR_BAD_RESPONSE,
-              config10,
+              config11,
               lastRequest
             ));
           }
@@ -52104,9 +52104,9 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
             return;
           }
           const err = new AxiosError_default(
-            "maxContentLength size of " + config10.maxContentLength + " exceeded",
+            "maxContentLength size of " + config11.maxContentLength + " exceeded",
             AxiosError_default.ERR_BAD_RESPONSE,
-            config10,
+            config11,
             lastRequest
           );
           responseStream.destroy(err);
@@ -52115,7 +52115,7 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
         responseStream.on("error", function handleStreamError(err) {
           if (req.destroyed)
             return;
-          reject(AxiosError_default.from(err, null, config10, lastRequest));
+          reject(AxiosError_default.from(err, null, config11, lastRequest));
         });
         responseStream.on("end", function handleStreamEnd() {
           try {
@@ -52128,7 +52128,7 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
             }
             response.data = responseData;
           } catch (err) {
-            return reject(AxiosError_default.from(err, null, config10, response.request, response));
+            return reject(AxiosError_default.from(err, null, config11, response.request, response));
           }
           settle(resolve, reject, response);
         });
@@ -52145,18 +52145,18 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
       req.destroy(err);
     });
     req.on("error", function handleRequestError(err) {
-      reject(AxiosError_default.from(err, null, config10, req));
+      reject(AxiosError_default.from(err, null, config11, req));
     });
     req.on("socket", function handleRequestSocket(socket) {
       socket.setKeepAlive(true, 1e3 * 60);
     });
-    if (config10.timeout) {
-      const timeout = parseInt(config10.timeout, 10);
+    if (config11.timeout) {
+      const timeout = parseInt(config11.timeout, 10);
       if (Number.isNaN(timeout)) {
         reject(new AxiosError_default(
           "error trying to parse `config.timeout` to int",
           AxiosError_default.ERR_BAD_OPTION_VALUE,
-          config10,
+          config11,
           req
         ));
         return;
@@ -52164,15 +52164,15 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
       req.setTimeout(timeout, function handleRequestTimeout() {
         if (isDone)
           return;
-        let timeoutErrorMessage = config10.timeout ? "timeout of " + config10.timeout + "ms exceeded" : "timeout exceeded";
-        const transitional2 = config10.transitional || transitional_default;
-        if (config10.timeoutErrorMessage) {
-          timeoutErrorMessage = config10.timeoutErrorMessage;
+        let timeoutErrorMessage = config11.timeout ? "timeout of " + config11.timeout + "ms exceeded" : "timeout exceeded";
+        const transitional2 = config11.transitional || transitional_default;
+        if (config11.timeoutErrorMessage) {
+          timeoutErrorMessage = config11.timeoutErrorMessage;
         }
         reject(new AxiosError_default(
           timeoutErrorMessage,
           transitional2.clarifyTimeoutError ? AxiosError_default.ETIMEDOUT : AxiosError_default.ECONNABORTED,
-          config10,
+          config11,
           req
         ));
         abort();
@@ -52190,7 +52190,7 @@ var http_default = isHttpAdapterSupported && function httpAdapter(config10) {
       });
       data.on("close", () => {
         if (!ended && !errored) {
-          abort(new CanceledError_default("Request stream has been aborted", config10, req));
+          abort(new CanceledError_default("Request stream has been aborted", config11, req));
         }
       });
       data.pipe(req);
@@ -52291,7 +52291,7 @@ var cookies_default = platform_default.hasStandardBrowserEnv ? {
 var headersToObject = (thing) => thing instanceof AxiosHeaders_default ? { ...thing } : thing;
 function mergeConfig(config1, config22) {
   config22 = config22 || {};
-  const config10 = {};
+  const config11 = {};
   function getMergedValue(target, source, caseless) {
     if (utils_default.isPlainObject(target) && utils_default.isPlainObject(source)) {
       return utils_default.merge.call({ caseless }, target, source);
@@ -52362,17 +52362,17 @@ function mergeConfig(config1, config22) {
   utils_default.forEach(Object.keys(Object.assign({}, config1, config22)), function computeConfigValue(prop) {
     const merge2 = mergeMap[prop] || mergeDeepProperties;
     const configValue = merge2(config1[prop], config22[prop], prop);
-    utils_default.isUndefined(configValue) && merge2 !== mergeDirectKeys || (config10[prop] = configValue);
+    utils_default.isUndefined(configValue) && merge2 !== mergeDirectKeys || (config11[prop] = configValue);
   });
-  return config10;
+  return config11;
 }
 
 // node_modules/.pnpm/axios@1.7.2/node_modules/axios/lib/helpers/resolveConfig.js
-var resolveConfig_default = (config10) => {
-  const newConfig = mergeConfig({}, config10);
+var resolveConfig_default = (config11) => {
+  const newConfig = mergeConfig({}, config11);
   let { data, withXSRFToken, xsrfHeaderName, xsrfCookieName, headers, auth } = newConfig;
   newConfig.headers = headers = AxiosHeaders_default.from(headers);
-  newConfig.url = buildURL(buildFullPath(newConfig.baseURL, newConfig.url), config10.params, config10.paramsSerializer);
+  newConfig.url = buildURL(buildFullPath(newConfig.baseURL, newConfig.url), config11.params, config11.paramsSerializer);
   if (auth) {
     headers.set(
       "Authorization",
@@ -52402,9 +52402,9 @@ var resolveConfig_default = (config10) => {
 
 // node_modules/.pnpm/axios@1.7.2/node_modules/axios/lib/adapters/xhr.js
 var isXHRAdapterSupported = typeof XMLHttpRequest !== "undefined";
-var xhr_default = isXHRAdapterSupported && function(config10) {
+var xhr_default = isXHRAdapterSupported && function(config11) {
   return new Promise(function dispatchXhrRequest(resolve, reject) {
-    const _config = resolveConfig_default(config10);
+    const _config = resolveConfig_default(config11);
     let requestData = _config.data;
     const requestHeaders = AxiosHeaders_default.from(_config.headers).normalize();
     let { responseType } = _config;
@@ -52433,7 +52433,7 @@ var xhr_default = isXHRAdapterSupported && function(config10) {
         status: request3.status,
         statusText: request3.statusText,
         headers: responseHeaders,
-        config: config10,
+        config: config11,
         request: request3
       };
       settle(function _resolve(value) {
@@ -52506,7 +52506,7 @@ var xhr_default = isXHRAdapterSupported && function(config10) {
         if (!request3) {
           return;
         }
-        reject(!cancel || cancel.type ? new CanceledError_default(null, config10, request3) : cancel);
+        reject(!cancel || cancel.type ? new CanceledError_default(null, config11, request3) : cancel);
         request3.abort();
         request3 = null;
       };
@@ -52517,7 +52517,7 @@ var xhr_default = isXHRAdapterSupported && function(config10) {
     }
     const protocol = parseProtocol(_config.url);
     if (protocol && platform_default.protocols.indexOf(protocol) === -1) {
-      reject(new AxiosError_default("Unsupported protocol " + protocol + ":", AxiosError_default.ERR_BAD_REQUEST, config10));
+      reject(new AxiosError_default("Unsupported protocol " + protocol + ":", AxiosError_default.ERR_BAD_REQUEST, config11));
       return;
     }
     request3.send(requestData || null);
@@ -52640,8 +52640,8 @@ var resolvers = {
 };
 isFetchSupported && ((res) => {
   ["text", "arrayBuffer", "blob", "formData", "stream"].forEach((type2) => {
-    !resolvers[type2] && (resolvers[type2] = utils_default.isFunction(res[type2]) ? (res2) => res2[type2]() : (_3, config10) => {
-      throw new AxiosError_default(`Response type '${type2}' is not supported`, AxiosError_default.ERR_NOT_SUPPORT, config10);
+    !resolvers[type2] && (resolvers[type2] = utils_default.isFunction(res[type2]) ? (res2) => res2[type2]() : (_3, config11) => {
+      throw new AxiosError_default(`Response type '${type2}' is not supported`, AxiosError_default.ERR_NOT_SUPPORT, config11);
     });
   });
 })(new Response());
@@ -52669,7 +52669,7 @@ var resolveBodyLength = async (headers, body) => {
   const length = utils_default.toFiniteNumber(headers.getContentLength());
   return length == null ? getBodyLength(body) : length;
 };
-var fetch_default = isFetchSupported && (async (config10) => {
+var fetch_default = isFetchSupported && (async (config11) => {
   let {
     url: url2,
     method,
@@ -52683,7 +52683,7 @@ var fetch_default = isFetchSupported && (async (config10) => {
     headers,
     withCredentials = "same-origin",
     fetchOptions
-  } = resolveConfig_default(config10);
+  } = resolveConfig_default(config11);
   responseType = responseType ? (responseType + "").toLowerCase() : "text";
   let [composedSignal, stopTimeout] = signal || cancelToken || timeout ? composeSignals_default([signal, cancelToken], timeout) : [];
   let finished, request3;
@@ -52741,7 +52741,7 @@ var fetch_default = isFetchSupported && (async (config10) => {
       );
     }
     responseType = responseType || "text";
-    let responseData = await resolvers[utils_default.findKey(resolvers, responseType) || "text"](response, config10);
+    let responseData = await resolvers[utils_default.findKey(resolvers, responseType) || "text"](response, config11);
     !isStreamResponse && onFinish();
     stopTimeout && stopTimeout();
     return await new Promise((resolve, reject) => {
@@ -52750,7 +52750,7 @@ var fetch_default = isFetchSupported && (async (config10) => {
         headers: AxiosHeaders_default.from(response.headers),
         status: response.status,
         statusText: response.statusText,
-        config: config10,
+        config: config11,
         request: request3
       });
     });
@@ -52758,13 +52758,13 @@ var fetch_default = isFetchSupported && (async (config10) => {
     onFinish();
     if (err && err.name === "TypeError" && /fetch/i.test(err.message)) {
       throw Object.assign(
-        new AxiosError_default("Network Error", AxiosError_default.ERR_NETWORK, config10, request3),
+        new AxiosError_default("Network Error", AxiosError_default.ERR_NETWORK, config11, request3),
         {
           cause: err.cause || err
         }
       );
     }
-    throw AxiosError_default.from(err, err && err.code, config10, request3);
+    throw AxiosError_default.from(err, err && err.code, config11, request3);
   }
 });
 
@@ -52823,41 +52823,41 @@ var adapters_default = {
 };
 
 // node_modules/.pnpm/axios@1.7.2/node_modules/axios/lib/core/dispatchRequest.js
-function throwIfCancellationRequested(config10) {
-  if (config10.cancelToken) {
-    config10.cancelToken.throwIfRequested();
+function throwIfCancellationRequested(config11) {
+  if (config11.cancelToken) {
+    config11.cancelToken.throwIfRequested();
   }
-  if (config10.signal && config10.signal.aborted) {
-    throw new CanceledError_default(null, config10);
+  if (config11.signal && config11.signal.aborted) {
+    throw new CanceledError_default(null, config11);
   }
 }
-function dispatchRequest(config10) {
-  throwIfCancellationRequested(config10);
-  config10.headers = AxiosHeaders_default.from(config10.headers);
-  config10.data = transformData.call(
-    config10,
-    config10.transformRequest
+function dispatchRequest(config11) {
+  throwIfCancellationRequested(config11);
+  config11.headers = AxiosHeaders_default.from(config11.headers);
+  config11.data = transformData.call(
+    config11,
+    config11.transformRequest
   );
-  if (["post", "put", "patch"].indexOf(config10.method) !== -1) {
-    config10.headers.setContentType("application/x-www-form-urlencoded", false);
+  if (["post", "put", "patch"].indexOf(config11.method) !== -1) {
+    config11.headers.setContentType("application/x-www-form-urlencoded", false);
   }
-  const adapter = adapters_default.getAdapter(config10.adapter || defaults_default.adapter);
-  return adapter(config10).then(function onAdapterResolution(response) {
-    throwIfCancellationRequested(config10);
+  const adapter = adapters_default.getAdapter(config11.adapter || defaults_default.adapter);
+  return adapter(config11).then(function onAdapterResolution(response) {
+    throwIfCancellationRequested(config11);
     response.data = transformData.call(
-      config10,
-      config10.transformResponse,
+      config11,
+      config11.transformResponse,
       response
     );
     response.headers = AxiosHeaders_default.from(response.headers);
     return response;
   }, function onAdapterRejection(reason) {
     if (!isCancel(reason)) {
-      throwIfCancellationRequested(config10);
+      throwIfCancellationRequested(config11);
       if (reason && reason.response) {
         reason.response.data = transformData.call(
-          config10,
-          config10.transformResponse,
+          config11,
+          config11.transformResponse,
           reason.response
         );
         reason.response.headers = AxiosHeaders_default.from(reason.response.headers);
@@ -52935,9 +52935,9 @@ var Axios = class {
       response: new InterceptorManager_default()
     };
   }
-  async request(configOrUrl, config10) {
+  async request(configOrUrl, config11) {
     try {
-      return await this._request(configOrUrl, config10);
+      return await this._request(configOrUrl, config11);
     } catch (err) {
       if (err instanceof Error) {
         let dummy;
@@ -52955,15 +52955,15 @@ var Axios = class {
       throw err;
     }
   }
-  _request(configOrUrl, config10) {
+  _request(configOrUrl, config11) {
     if (typeof configOrUrl === "string") {
-      config10 = config10 || {};
-      config10.url = configOrUrl;
+      config11 = config11 || {};
+      config11.url = configOrUrl;
     } else {
-      config10 = configOrUrl || {};
+      config11 = configOrUrl || {};
     }
-    config10 = mergeConfig(this.defaults, config10);
-    const { transitional: transitional2, paramsSerializer, headers } = config10;
+    config11 = mergeConfig(this.defaults, config11);
+    const { transitional: transitional2, paramsSerializer, headers } = config11;
     if (transitional2 !== void 0) {
       validator_default.assertOptions(transitional2, {
         silentJSONParsing: validators2.transitional(validators2.boolean),
@@ -52973,7 +52973,7 @@ var Axios = class {
     }
     if (paramsSerializer != null) {
       if (utils_default.isFunction(paramsSerializer)) {
-        config10.paramsSerializer = {
+        config11.paramsSerializer = {
           serialize: paramsSerializer
         };
       } else {
@@ -52983,10 +52983,10 @@ var Axios = class {
         }, true);
       }
     }
-    config10.method = (config10.method || this.defaults.method || "get").toLowerCase();
+    config11.method = (config11.method || this.defaults.method || "get").toLowerCase();
     let contextHeaders = headers && utils_default.merge(
       headers.common,
-      headers[config10.method]
+      headers[config11.method]
     );
     headers && utils_default.forEach(
       ["delete", "get", "head", "post", "put", "patch", "common"],
@@ -52994,11 +52994,11 @@ var Axios = class {
         delete headers[method];
       }
     );
-    config10.headers = AxiosHeaders_default.concat(contextHeaders, headers);
+    config11.headers = AxiosHeaders_default.concat(contextHeaders, headers);
     const requestInterceptorChain = [];
     let synchronousRequestInterceptors = true;
     this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
-      if (typeof interceptor.runWhen === "function" && interceptor.runWhen(config10) === false) {
+      if (typeof interceptor.runWhen === "function" && interceptor.runWhen(config11) === false) {
         return;
       }
       synchronousRequestInterceptors = synchronousRequestInterceptors && interceptor.synchronous;
@@ -53016,14 +53016,14 @@ var Axios = class {
       chain.unshift.apply(chain, requestInterceptorChain);
       chain.push.apply(chain, responseInterceptorChain);
       len = chain.length;
-      promise = Promise.resolve(config10);
+      promise = Promise.resolve(config11);
       while (i3 < len) {
         promise = promise.then(chain[i3++], chain[i3++]);
       }
       return promise;
     }
     len = requestInterceptorChain.length;
-    let newConfig = config10;
+    let newConfig = config11;
     i3 = 0;
     while (i3 < len) {
       const onFulfilled = requestInterceptorChain[i3++];
@@ -53047,25 +53047,25 @@ var Axios = class {
     }
     return promise;
   }
-  getUri(config10) {
-    config10 = mergeConfig(this.defaults, config10);
-    const fullPath = buildFullPath(config10.baseURL, config10.url);
-    return buildURL(fullPath, config10.params, config10.paramsSerializer);
+  getUri(config11) {
+    config11 = mergeConfig(this.defaults, config11);
+    const fullPath = buildFullPath(config11.baseURL, config11.url);
+    return buildURL(fullPath, config11.params, config11.paramsSerializer);
   }
 };
 utils_default.forEach(["delete", "get", "head", "options"], function forEachMethodNoData(method) {
-  Axios.prototype[method] = function(url2, config10) {
-    return this.request(mergeConfig(config10 || {}, {
+  Axios.prototype[method] = function(url2, config11) {
+    return this.request(mergeConfig(config11 || {}, {
       method,
       url: url2,
-      data: (config10 || {}).data
+      data: (config11 || {}).data
     }));
   };
 });
 utils_default.forEach(["post", "put", "patch"], function forEachMethodWithData(method) {
   function generateHTTPMethod(isForm) {
-    return function httpMethod(url2, data, config10) {
-      return this.request(mergeConfig(config10 || {}, {
+    return function httpMethod(url2, data, config11) {
+      return this.request(mergeConfig(config11 || {}, {
         method,
         headers: isForm ? {
           "Content-Type": "multipart/form-data"
@@ -53111,11 +53111,11 @@ var CancelToken = class {
       };
       return promise;
     };
-    executor(function cancel(message, config10, request3) {
+    executor(function cancel(message, config11, request3) {
       if (token.reason) {
         return;
       }
-      token.reason = new CanceledError_default(message, config10, request3);
+      token.reason = new CanceledError_default(message, config11, request3);
       resolvePromise(token.reason);
     });
   }
@@ -59329,28 +59329,56 @@ var TestAi = class {
 };
 var testAi = new TestAi();
 
+// src/engine/llmservice.ts
+var config7 = getConfig();
+var LlmServiceAi = class {
+  async generateCommitMessage(messages) {
+    const url2 = "http://localhost:3000/api/v1/prediction/4795e9cb-3a02-4a4c-9a6f-4c7218af84d1";
+    const p3 = {
+      question: messages[messages.length - 1],
+      history: messages.slice(1, -1)
+    };
+    console.log("HERE\n", p3, "\n");
+    try {
+      const response = await axios_default.post(url2, p3, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      const message = response.data;
+      return message?.text;
+    } catch (err) {
+      const message = err.response?.data?.error ?? err.message;
+      throw new Error("local model issues. details: " + message);
+    }
+  }
+};
+var llmServiceAi = new LlmServiceAi();
+
 // src/utils/engine.ts
 function getEngine() {
-  const config10 = getConfig();
-  const provider4 = config10?.OCO_AI_PROVIDER;
+  const config11 = getConfig();
+  const provider4 = config11?.OCO_AI_PROVIDER;
   if (provider4?.startsWith("ollama")) {
     const model = provider4.split("/")[1];
     if (model)
       ollamaAi.setModel(model);
     return ollamaAi;
-  } else if (config10?.OCO_AI_PROVIDER == "anthropic") {
+  } else if (config11?.OCO_AI_PROVIDER == "anthropic") {
     return anthropicAi;
-  } else if (config10?.OCO_AI_PROVIDER == "test") {
+  } else if (config11?.OCO_AI_PROVIDER == "test") {
     return testAi;
-  } else if (config10?.OCO_AI_PROVIDER == "azure") {
+  } else if (config11?.OCO_AI_PROVIDER == "azure") {
     return azure;
+  } else if (config11?.OCO_AI_PROVIDER == "flowise") {
+    return llmServiceAi;
   }
   return api;
 }
 
 // src/modules/commitlint/config.ts
-var config7 = getConfig();
-var translation2 = i18n[config7?.OCO_LANGUAGE || "en"];
+var config8 = getConfig();
+var translation2 = i18n[config8?.OCO_LANGUAGE || "en"];
 var configureCommitlintIntegration = async (force = false) => {
   const spin = le();
   spin.start("Loading @commitlint configuration");
@@ -59394,15 +59422,15 @@ function removeConventionalCommitWord(message) {
 }
 
 // src/prompts.ts
-var config8 = getConfig();
-var translation3 = i18n[config8?.OCO_LANGUAGE || "en"];
+var config9 = getConfig();
+var translation3 = i18n[config9?.OCO_LANGUAGE || "en"];
 var IDENTITY = "You are to act as the author of a commit message in git.";
 var INIT_MAIN_PROMPT2 = (language, fullGitMojiSpec) => ({
   role: import_openai4.ChatCompletionRequestMessageRoleEnum.System,
   content: `${IDENTITY} Your mission is to create clean and comprehensive commit messages as per the ${fullGitMojiSpec ? "GitMoji specification" : "conventional commit convention"} and explain WHAT were the changes and mainly WHY the changes were done. I'll send you an output of 'git diff --staged' command, and you are to convert it into a commit message.
-  ${config8?.OCO_EMOJI ? `Use GitMoji convention to preface the commit. Here are some help to choose the right emoji (emoji, description): \u{1F41B}, Fix a bug; \u2728, Introduce new features; \u{1F4DD}, Add or update documentation; \u{1F680}, Deploy stuff; \u2705, Add, update, or pass tests; \u267B\uFE0F, Refactor code; \u2B06\uFE0F, Upgrade dependencies; \u{1F527}, Add or update configuration files; \u{1F310}, Internationalization and localization; \u{1F4A1}, Add or update comments in source code; ${fullGitMojiSpec ? "\u{1F3A8}, Improve structure / format of the code; \u26A1\uFE0F, Improve performance; \u{1F525}, Remove code or files; \u{1F691}\uFE0F, Critical hotfix; \u{1F484}, Add or update the UI and style files; \u{1F389}, Begin a project; \u{1F512}\uFE0F, Fix security issues; \u{1F510}, Add or update secrets; \u{1F516}, Release / Version tags; \u{1F6A8}, Fix compiler / linter warnings; \u{1F6A7}, Work in progress; \u{1F49A}, Fix CI Build; \u2B07\uFE0F, Downgrade dependencies; \u{1F4CC}, Pin dependencies to specific versions; \u{1F477}, Add or update CI build system; \u{1F4C8}, Add or update analytics or track code; \u2795, Add a dependency; \u2796, Remove a dependency; \u{1F528}, Add or update development scripts; \u270F\uFE0F, Fix typos; \u{1F4A9}, Write bad code that needs to be improved; \u23EA\uFE0F, Revert changes; \u{1F500}, Merge branches; \u{1F4E6}\uFE0F, Add or update compiled files or packages; \u{1F47D}\uFE0F, Update code due to external API changes; \u{1F69A}, Move or rename resources (e.g.: files, paths, routes); \u{1F4C4}, Add or update license; \u{1F4A5}, Introduce breaking changes; \u{1F371}, Add or update assets; \u267F\uFE0F, Improve accessibility; \u{1F37B}, Write code drunkenly; \u{1F4AC}, Add or update text and literals; \u{1F5C3}\uFE0F, Perform database related changes; \u{1F50A}, Add or update logs; \u{1F507}, Remove logs; \u{1F465}, Add or update contributor(s); \u{1F6B8}, Improve user experience / usability; \u{1F3D7}\uFE0F, Make architectural changes; \u{1F4F1}, Work on responsive design; \u{1F921}, Mock things; \u{1F95A}, Add or update an easter egg; \u{1F648}, Add or update a .gitignore file; \u{1F4F8}, Add or update snapshots; \u2697\uFE0F, Perform experiments; \u{1F50D}\uFE0F, Improve SEO; \u{1F3F7}\uFE0F, Add or update types; \u{1F331}, Add or update seed files; \u{1F6A9}, Add, update, or remove feature flags; \u{1F945}, Catch errors; \u{1F4AB}, Add or update animations and transitions; \u{1F5D1}\uFE0F, Deprecate code that needs to be cleaned up; \u{1F6C2}, Work on code related to authorization, roles and permissions; \u{1FA79}, Simple fix for a non-critical issue; \u{1F9D0}, Data exploration/inspection; \u26B0\uFE0F, Remove dead code; \u{1F9EA}, Add a failing test; \u{1F454}, Add or update business logic; \u{1FA7A}, Add or update healthcheck; \u{1F9F1}, Infrastructure related changes; \u{1F9D1}\u200D\u{1F4BB}, Improve developer experience; \u{1F4B8}, Add sponsorships or money related infrastructure; \u{1F9F5}, Add or update code related to multithreading or concurrency; \u{1F9BA}, Add or update code related to validation." : ""}` : "Do not preface the commit with anything. Conventional commit keywords:fix, feat, build, chore, ci, docs, style, refactor, perf, test."}  
-    ${config8?.OCO_DESCRIPTION ? `Add a short description of WHY the changes are done after the commit message. Don't start it with "This commit", just describe the changes.` : "Don't add any descriptions to the commit, only commit message."}
-    ${config8?.OCO_ONE_LINE_COMMIT ? "Craft a concise commit message that encapsulates all changes made, with an emphasis on the primary updates. If the modifications share a common theme or scope, mention it succinctly; otherwise, leave the scope out to maintain focus. The goal is to provide a clear and unified overview of the changes in a one single message, without diverging into a list of commit per file change." : ""}
+  ${config9?.OCO_EMOJI ? `Use GitMoji convention to preface the commit. Here are some help to choose the right emoji (emoji, description): \u{1F41B}, Fix a bug; \u2728, Introduce new features; \u{1F4DD}, Add or update documentation; \u{1F680}, Deploy stuff; \u2705, Add, update, or pass tests; \u267B\uFE0F, Refactor code; \u2B06\uFE0F, Upgrade dependencies; \u{1F527}, Add or update configuration files; \u{1F310}, Internationalization and localization; \u{1F4A1}, Add or update comments in source code; ${fullGitMojiSpec ? "\u{1F3A8}, Improve structure / format of the code; \u26A1\uFE0F, Improve performance; \u{1F525}, Remove code or files; \u{1F691}\uFE0F, Critical hotfix; \u{1F484}, Add or update the UI and style files; \u{1F389}, Begin a project; \u{1F512}\uFE0F, Fix security issues; \u{1F510}, Add or update secrets; \u{1F516}, Release / Version tags; \u{1F6A8}, Fix compiler / linter warnings; \u{1F6A7}, Work in progress; \u{1F49A}, Fix CI Build; \u2B07\uFE0F, Downgrade dependencies; \u{1F4CC}, Pin dependencies to specific versions; \u{1F477}, Add or update CI build system; \u{1F4C8}, Add or update analytics or track code; \u2795, Add a dependency; \u2796, Remove a dependency; \u{1F528}, Add or update development scripts; \u270F\uFE0F, Fix typos; \u{1F4A9}, Write bad code that needs to be improved; \u23EA\uFE0F, Revert changes; \u{1F500}, Merge branches; \u{1F4E6}\uFE0F, Add or update compiled files or packages; \u{1F47D}\uFE0F, Update code due to external API changes; \u{1F69A}, Move or rename resources (e.g.: files, paths, routes); \u{1F4C4}, Add or update license; \u{1F4A5}, Introduce breaking changes; \u{1F371}, Add or update assets; \u267F\uFE0F, Improve accessibility; \u{1F37B}, Write code drunkenly; \u{1F4AC}, Add or update text and literals; \u{1F5C3}\uFE0F, Perform database related changes; \u{1F50A}, Add or update logs; \u{1F507}, Remove logs; \u{1F465}, Add or update contributor(s); \u{1F6B8}, Improve user experience / usability; \u{1F3D7}\uFE0F, Make architectural changes; \u{1F4F1}, Work on responsive design; \u{1F921}, Mock things; \u{1F95A}, Add or update an easter egg; \u{1F648}, Add or update a .gitignore file; \u{1F4F8}, Add or update snapshots; \u2697\uFE0F, Perform experiments; \u{1F50D}\uFE0F, Improve SEO; \u{1F3F7}\uFE0F, Add or update types; \u{1F331}, Add or update seed files; \u{1F6A9}, Add, update, or remove feature flags; \u{1F945}, Catch errors; \u{1F4AB}, Add or update animations and transitions; \u{1F5D1}\uFE0F, Deprecate code that needs to be cleaned up; \u{1F6C2}, Work on code related to authorization, roles and permissions; \u{1FA79}, Simple fix for a non-critical issue; \u{1F9D0}, Data exploration/inspection; \u26B0\uFE0F, Remove dead code; \u{1F9EA}, Add a failing test; \u{1F454}, Add or update business logic; \u{1FA7A}, Add or update healthcheck; \u{1F9F1}, Infrastructure related changes; \u{1F9D1}\u200D\u{1F4BB}, Improve developer experience; \u{1F4B8}, Add sponsorships or money related infrastructure; \u{1F9F5}, Add or update code related to multithreading or concurrency; \u{1F9BA}, Add or update code related to validation." : ""}` : "Do not preface the commit with anything. Conventional commit keywords:fix, feat, build, chore, ci, docs, style, refactor, perf, test."}  
+    ${config9?.OCO_DESCRIPTION ? `Add a short description of WHY the changes are done after the commit message. Don't start it with "This commit", just describe the changes.` : "Don't add any descriptions to the commit, only commit message."}
+    ${config9?.OCO_ONE_LINE_COMMIT ? "Craft a concise commit message that encapsulates all changes made, with an emphasis on the primary updates. If the modifications share a common theme or scope, mention it succinctly; otherwise, leave the scope out to maintain focus. The goal is to provide a clear and unified overview of the changes in a one single message, without diverging into a list of commit per file change." : ""}
     Use the present tense. Lines must not be longer than 74 characters. Use ${language} for the commit message.`
 });
 var INIT_DIFF_PROMPT = {
@@ -59434,12 +59462,12 @@ var INIT_DIFF_PROMPT = {
 };
 var INIT_CONSISTENCY_PROMPT = (translation4) => ({
   role: import_openai4.ChatCompletionRequestMessageRoleEnum.Assistant,
-  content: `${config8?.OCO_EMOJI ? `\u{1F41B} ${removeConventionalCommitWord(translation4.commitFix)}` : translation4.commitFix}
-${config8?.OCO_EMOJI ? `\u2728 ${removeConventionalCommitWord(translation4.commitFeat)}` : translation4.commitFeat}
-${config8?.OCO_DESCRIPTION ? translation4.commitDescription : ""}`
+  content: `${config9?.OCO_EMOJI ? `\u{1F41B} ${removeConventionalCommitWord(translation4.commitFix)}` : translation4.commitFix}
+${config9?.OCO_EMOJI ? `\u2728 ${removeConventionalCommitWord(translation4.commitFeat)}` : translation4.commitFeat}
+${config9?.OCO_DESCRIPTION ? translation4.commitDescription : ""}`
 });
 var getMainCommitPrompt = async (fullGitMojiSpec) => {
-  switch (config8?.OCO_PROMPT_MODULE) {
+  switch (config9?.OCO_PROMPT_MODULE) {
     case "@commitlint":
       if (!await commitlintLLMConfigExists()) {
         ie(
@@ -59484,9 +59512,9 @@ function mergeDiffs(arr, maxStringLength) {
 }
 
 // src/generateCommitMessageFromGitDiff.ts
-var config9 = getConfig();
-var MAX_TOKENS_INPUT4 = config9?.OCO_TOKENS_MAX_INPUT || 4096 /* DEFAULT_MAX_TOKENS_INPUT */;
-var MAX_TOKENS_OUTPUT4 = config9?.OCO_TOKENS_MAX_OUTPUT || 500 /* DEFAULT_MAX_TOKENS_OUTPUT */;
+var config10 = getConfig();
+var MAX_TOKENS_INPUT4 = config10?.OCO_TOKENS_MAX_INPUT || 4096 /* DEFAULT_MAX_TOKENS_INPUT */;
+var MAX_TOKENS_OUTPUT4 = config10?.OCO_TOKENS_MAX_OUTPUT || 500 /* DEFAULT_MAX_TOKENS_OUTPUT */;
 var generateCommitMessageChatCompletionPrompt = async (diff, fullGitMojiSpec) => {
   const INIT_MESSAGES_PROMPT = await getMainCommitPrompt(fullGitMojiSpec);
   const chatContextAsCompletionRequest = [...INIT_MESSAGES_PROMPT];
