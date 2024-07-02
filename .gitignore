@@ -11,3 +11,6 @@ uncaughtExceptions.log
 src/*.json
 .idea
 test.ts
+package.json
+package-lock.json
+pnpm-lock.yaml
