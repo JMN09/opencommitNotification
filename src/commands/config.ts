@@ -82,10 +82,9 @@ const validateConfig = (
 
 export const configValidators = {
   [CONFIG_KEYS.OCO_OPENAI_API_KEY](value: any, config: any = {}) {
-    //need api key unless running locally with ollama
     validateConfig(
       'OpenAI API_KEY',
-      value || config.OCO_ANTHROPIC_API_KEY || config.OCO_AI_PROVIDER.startsWith('ollama') || config.OCO_AZURE_API_KEY || config.OCO_AI_PROVIDER == 'test' ,
+      value || config.OCO_ANTHROPIC_API_KEY || config.OCO_AI_PROVIDER.startsWith('ollama') || config.OCO_AZURE_API_KEY || config.OCO_AI_PROVIDER == 'test' || config.OCO_AI_PROVIDER == 'flowise',
       'You need to provide an OpenAI/Anthropic/Azure API key'
     );
     validateConfig(
@@ -100,7 +99,7 @@ export const configValidators = {
   [CONFIG_KEYS.OCO_AZURE_API_KEY](value: any, config: any = {}) {
     validateConfig(
       'ANTHROPIC_API_KEY',
-      value || config.OCO_OPENAI_API_KEY || config.OCO_AZURE_API_KEY || config.OCO_AI_PROVIDER == 'ollama' || config.OCO_AI_PROVIDER == 'test',
+      value || config.OCO_OPENAI_API_KEY || config.OCO_AZURE_API_KEY || config.OCO_AI_PROVIDER == 'ollama' || config.OCO_AI_PROVIDER == 'test' || config.OCO_AI_PROVIDER == 'flowise',
       'You need to provide an OpenAI/Anthropic/Azure API key'
     );
 
@@ -110,7 +109,7 @@ export const configValidators = {
   [CONFIG_KEYS.OCO_ANTHROPIC_API_KEY](value: any, config: any = {}) {
     validateConfig(
       'ANTHROPIC_API_KEY',
-      value || config.OCO_OPENAI_API_KEY || config.OCO_AI_PROVIDER == 'ollama' || config.OCO_AI_PROVIDER == 'test',
+      value || config.OCO_OPENAI_API_KEY || config.OCO_AI_PROVIDER == 'ollama' || config.OCO_AI_PROVIDER == 'test' || config.OCO_AI_PROVIDER == 'flowise',
       'You need to provide an OpenAI/Anthropic/Azure API key'
     );
 
@@ -196,7 +195,7 @@ export const configValidators = {
   [CONFIG_KEYS.OCO_MODEL](value: any, config: any = {}) {
     validateConfig(
       CONFIG_KEYS.OCO_MODEL,
-      [...MODEL_LIST.openai, ...MODEL_LIST.anthropic].includes(value) || config.OCO_AI_PROVIDER == 'ollama' || config.OCO_AI_PROVIDER == 'test'|| config.OCO_AI_PROVIDER == 'azure',
+      [...MODEL_LIST.openai, ...MODEL_LIST.anthropic].includes(value) || config.OCO_AI_PROVIDER == 'ollama' || config.OCO_AI_PROVIDER == 'test'|| config.OCO_AI_PROVIDER == 'azure' || config.OCO_AI_PROVIDER == 'flowise',
       `${value} is not supported yet, use 'gpt-4o', 'gpt-4', 'gpt-4-turbo', 'gpt-3.5-turbo' (default), 'gpt-3.5-turbo-0125', 'gpt-4-1106-preview', 'gpt-4-turbo-preview', 'gpt-4-0125-preview', 'claude-3-opus-20240229', 'claude-3-sonnet-20240229' or 'claude-3-haiku-20240307'`
     );
     validateConfig(
@@ -245,9 +244,10 @@ export const configValidators = {
         'anthropic',
         'azure', 
         'ollama', 
-        'test'
+        'test',
+        'flowise'
       ].includes(value) || value.startsWith('ollama'),
-      `${value} is not supported yet, use 'ollama/{model}', 'azure', 'anthropic' or 'openai' (default)`
+      `${value} is not supported yet, use 'ollama/{model}', 'azure', 'anthropic', flowise, or 'openai' (default)`
     );
     return value;
   },

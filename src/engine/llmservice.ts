@@ -8,41 +8,30 @@ import {
 
 const config = getConfig();
 
-export class OllamaAi implements AiEngine {
-  private model = "mistral"; // as default model of Ollama
+export class LlmServiceAi implements AiEngine {
 
-  setModel(model: string) {
-    this.model = model ?? config?.OCO_MODEL ?? 'mistral';
-  }
   async generateCommitMessage(
     messages: Array<ChatCompletionRequestMessage>
   ): Promise<string | undefined> {
-    console.log( "The size of the messages is: ", messages.length );
-    messages.forEach( message => 
-      {
-        console.log( message );
-      } 
-    );
-    const model = this.model;
 
     //console.log(messages);
     //process.exit()
-
-    const url = 'http://10.26.72.11:11435/api/chat';
+    
+    const url = 'http://<your-flowise-server>:3000/api/v1/prediction/<your-chatflowid>'; // to be determined
     const p = {
-      model,
-      messages,
-      options: { temperature: 0, top_p: 0.1 },
-      stream: false
-    };
+        question : messages[ messages.length - 1 ],
+        history : messages.slice( 1, -1 ) 
+        // omitting 0, the system prompt, will be given to the llm in flowise
+        // omitting the user prompt, which will be the question
+    }
     try {
       const response = await axios.post(url, p, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
-
       const message = response.data.message;
+      // have to check the returned message from flowise, it's not documented in their api page
 
       return message?.content;
     } catch (err: any) {
@@ -52,4 +41,4 @@ export class OllamaAi implements AiEngine {
   }
 }
 
-export const ollamaAi = new OllamaAi();
+export const llmServiceAi = new LlmServiceAi();
