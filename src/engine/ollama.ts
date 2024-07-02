@@ -22,7 +22,7 @@ export class OllamaAi implements AiEngine {
     //console.log(messages);
     //process.exit()
 
-    const url = 'http://localhost:11434/api/chat';
+    const url = 'http://10.26.72.11:11435/api/chat';
     const p = {
       model,
       messages,
