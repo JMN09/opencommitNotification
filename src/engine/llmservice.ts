@@ -17,7 +17,7 @@ export class LlmServiceAi implements AiEngine {
     //console.log(messages);
     //process.exit()
     
-    const url = 'http://<your-flowise-server>:3000/api/v1/prediction/<your-chatflowid>'; // to be determined
+    const url = 'http://localhost:3000/api/v1/prediction/218b6cc2-3a52-45d9-b009-9031b615f0ef%22'; // to be determined
     const p = {
         question : messages[ messages.length - 1 ],
         history : messages.slice( 1, -1 ) 
@@ -30,10 +30,10 @@ export class LlmServiceAi implements AiEngine {
           'Content-Type': 'application/json'
         }
       });
-      const message = response.data.message;
+      const message = response.data;
       // have to check the returned message from flowise, it's not documented in their api page
 
-      return message?.content;
+      return message?.text;
     } catch (err: any) {
       const message = err.response?.data?.error ?? err.message;
       throw new Error('local model issues. details: ' + message);

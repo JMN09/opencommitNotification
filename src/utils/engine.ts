@@ -5,6 +5,7 @@ import { ollamaAi } from '../engine/ollama';
 import { azure } from '../engine/azure';
 import { anthropicAi } from '../engine/anthropic'
 import { testAi } from '../engine/testAi';
+import { llmServiceAi } from '../engine/llmservice';
 
 export function getEngine(): AiEngine {
   const config = getConfig();
@@ -20,6 +21,8 @@ export function getEngine(): AiEngine {
     return testAi;
   } else if (config?.OCO_AI_PROVIDER == 'azure') {
     return azure;
+  } else if(config?.OCO_AI_PROVIDER == 'flowise') {
+    return llmServiceAi;
   }
   // open ai gpt by default
   return api;
