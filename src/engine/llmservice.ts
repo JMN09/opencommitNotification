@@ -18,14 +18,14 @@ export class LlmServiceAi implements AiEngine {
     //process.exit()
     
     const url = `http://${config?.OCO_FLOWISE_ENDPOINT}/api/v1/prediction/${config?.OCO_FLOWISE_API_KEY}`; // this key is specific to flowise
-    const p = {
+    const payload = {
         question : messages[ messages.length - 1 ],
         history : messages.slice( 1, -1 ) 
         // omitting 0, the system prompt, will be given to the llm in flowise
         // omitting the user prompt, which will be the question
     }
     try {
-      const response = await axios.post(url, p, {
+      const response = await axios.post(url, payload, {
         headers: {
           'Content-Type': 'application/json'
         }

@@ -24,8 +24,7 @@ export class OllamaAi implements AiEngine {
     //process.exit()
 
     const url = `http://${config?.OCO_OLLAMA_ENDPOINT}/api/chat`;
-    for( let i = 1; i < 1000000; i++ ){
-    }
+
     const p = {
       model,
       messages,
