@@ -8,7 +8,7 @@ import {
 
 const config = getConfig();
 
-export class LlmServiceAi implements AiEngine {
+export class FlowiseAi implements AiEngine {
 
   async generateCommitMessage(
     messages: Array<ChatCompletionRequestMessage>
@@ -41,4 +41,4 @@ export class LlmServiceAi implements AiEngine {
   }
 }
 
-export const llmServiceAi = new LlmServiceAi();
+export const flowiseAi = new FlowiseAi();
