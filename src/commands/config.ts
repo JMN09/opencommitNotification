@@ -27,7 +27,10 @@ export enum CONFIG_KEYS {
   OCO_AI_PROVIDER = 'OCO_AI_PROVIDER',
   OCO_GITPUSH = 'OCO_GITPUSH',
   OCO_ONE_LINE_COMMIT = 'OCO_ONE_LINE_COMMIT',
-  OCO_AZURE_ENDPOINT = 'OCO_AZURE_ENDPOINT'
+  OCO_AZURE_ENDPOINT = 'OCO_AZURE_ENDPOINT',
+  OCO_FLOWISE_ENDPOINT = 'OCO_FLOWISE_ENDPOINT',
+  OCO_FLOWISE_API_KEY = 'OCO_FLOWISE_API_KEY',
+  OCO_OLLAMA_ENDPOINT = 'OCO_OLLAMA_ENDPOINT'
 }
 
 export enum CONFIG_MODES {
@@ -80,7 +83,7 @@ const validateConfig = (
   }
 };
 
-export const configValidators = {
+export const configValidators = { // collection of validation functions for each config key 
   [CONFIG_KEYS.OCO_OPENAI_API_KEY](value: any, config: any = {}) {
     validateConfig(
       'OpenAI API_KEY',
@@ -115,6 +118,15 @@ export const configValidators = {
 
     return value;
   },
+
+  [CONFIG_KEYS.OCO_FLOWISE_API_KEY](value: any, config: any = {}) {
+    validateConfig(
+      CONFIG_KEYS.OCO_FLOWISE_API_KEY,
+      value || config.OCO_AI_PROVIDER != 'flowise', 
+      'You need to provide a flowise API key'
+    );
+  },
+
 
   [CONFIG_KEYS.OCO_DESCRIPTION](value: any) {
     validateConfig(
@@ -262,6 +274,7 @@ export const configValidators = {
     return value;
   },
   [CONFIG_KEYS.OCO_AZURE_ENDPOINT](value: any) {
+
     validateConfig(
       CONFIG_KEYS.OCO_AZURE_ENDPOINT,
       value.includes('openai.azure.com'),
@@ -270,6 +283,23 @@ export const configValidators = {
 
     return value;
   },
+  [CONFIG_KEYS.OCO_FLOWISE_ENDPOINT](value: any) {
+    validateConfig(
+      CONFIG_KEYS.OCO_FLOWISE_ENDPOINT,
+      typeof value === 'string', 
+      'Value must be string' // Considering the possibility of DNS lookup or feeding the I.P. explicitely, there is no pattern to verify, except a column for the port number
+    );
+  },
+
+  [CONFIG_KEYS.OCO_OLLAMA_ENDPOINT]( value: any ){
+    validateConfig(
+      CONFIG_KEYS.OCO_OLLAMA_ENDPOINT,
+      typeof value === 'string',
+      'Value must be string' // Considering the possibility of DNS lookup or feeding the I.P. explicitely, there is no pattern to verify, except a column for the port number
+    );
+  
+  }
+  
 };
 
 export type ConfigType = {
@@ -309,9 +339,11 @@ export const getConfig = ({
     OCO_GITPUSH: process.env.OCO_GITPUSH === 'false' ? false : true,
     OCO_ONE_LINE_COMMIT:
       process.env.OCO_ONE_LINE_COMMIT === 'true' ? true : false,
-    OCO_AZURE_ENDPOINT: process.env.OCO_AZURE_ENDPOINT || '',
+    OCO_AZURE_ENDPOINT: process.env.OCO_AZURE_ENDPOINT || 'openai.azure.com',
+    OCO_FLOWISE_ENDPOINT: process.env.OCO_FLOWISE_ENDPOINT || 'undefined',
+    OCO_FLOWISE_API_KEY: process.env.OCO_FLOWISE_API_KEY || '',
+    OCO_OLLAMA_ENDPOINT: process.env.OCO_OLLAMA_ENDPOINT || ''
   };
-
   const configExists = existsSync(configPath);
   if (!configExists) return configFromEnv;
 
@@ -347,9 +379,9 @@ export const getConfig = ({
 
 export const setConfig = (keyValues: [key: string, value: string][], configPath: string = defaultConfigPath) => {
   const config = getConfig() || {};
-
   for (const [configKey, configValue] of keyValues) {
-    if (!configValidators.hasOwnProperty(configKey)) {
+
+    if (!configValidators.hasOwnProperty(configKey)) { // determine if the config key is one that's defined in the enum type at the beginning 
       throw new Error(`Unsupported config key: ${configKey}`);
     }
 
@@ -360,7 +392,6 @@ export const setConfig = (keyValues: [key: string, value: string][], configPath:
     } catch (error) {
       parsedConfigValue = configValue;
     }
-
     const validValue =
       configValidators[configKey as CONFIG_KEYS](parsedConfigValue);
     config[configKey as CONFIG_KEYS] = validValue;
