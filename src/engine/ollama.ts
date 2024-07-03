@@ -17,18 +17,15 @@ export class OllamaAi implements AiEngine {
   async generateCommitMessage(
     messages: Array<ChatCompletionRequestMessage>
   ): Promise<string | undefined> {
-    console.log( "The size of the messages is: ", messages.length );
-    messages.forEach( message => 
-      {
-        console.log( message );
-      } 
-    );
+
     const model = this.model;
 
     //console.log(messages);
     //process.exit()
 
-    const url = 'http://10.26.72.11:11435/api/chat';
+    const url = `http://${config?.OCO_OLLAMA_ENDPOINT}/api/chat`;
+    for( let i = 1; i < 1000000; i++ ){
+    }
     const p = {
       model,
       messages,

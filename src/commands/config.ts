@@ -125,6 +125,8 @@ export const configValidators = { // collection of validation functions for each
       value || config.OCO_AI_PROVIDER != 'flowise', 
       'You need to provide a flowise API key'
     );
+
+    return value;
   },
 
 
@@ -286,18 +288,21 @@ export const configValidators = { // collection of validation functions for each
   [CONFIG_KEYS.OCO_FLOWISE_ENDPOINT](value: any) {
     validateConfig(
       CONFIG_KEYS.OCO_FLOWISE_ENDPOINT,
-      typeof value === 'string', 
-      'Value must be string' // Considering the possibility of DNS lookup or feeding the I.P. explicitely, there is no pattern to verify, except a column for the port number
+      typeof value === 'string' && value.includes(':'),
+      'Value must be string and should include both I.P. and port number' // Considering the possibility of DNS lookup or feeding the I.P. explicitely, there is no pattern to verify, except a column for the port number
     );
+
+    return value;
   },
 
   [CONFIG_KEYS.OCO_OLLAMA_ENDPOINT]( value: any ){
     validateConfig(
       CONFIG_KEYS.OCO_OLLAMA_ENDPOINT,
-      typeof value === 'string',
-      'Value must be string' // Considering the possibility of DNS lookup or feeding the I.P. explicitely, there is no pattern to verify, except a column for the port number
+      typeof value === 'string' && value.includes(':'),
+      'Value must be string and should include both I.P. and port number' // Considering the possibility of DNS lookup or feeding the I.P. explicitely, there is no pattern to verify, except a column for the port number
     );
-  
+
+    return value;
   }
   
 };

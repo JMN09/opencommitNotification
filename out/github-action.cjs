@@ -49660,6 +49660,7 @@ var configValidators = {
       value || config11.OCO_AI_PROVIDER != "flowise",
       "You need to provide a flowise API key"
     );
+    return value;
   },
   ["OCO_DESCRIPTION" /* OCO_DESCRIPTION */](value) {
     validateConfig(
@@ -49797,16 +49798,18 @@ var configValidators = {
   ["OCO_FLOWISE_ENDPOINT" /* OCO_FLOWISE_ENDPOINT */](value) {
     validateConfig(
       "OCO_FLOWISE_ENDPOINT" /* OCO_FLOWISE_ENDPOINT */,
-      typeof value === "string",
-      "Value must be string"
+      typeof value === "string" && value.includes(":"),
+      "Value must be string and should include both I.P. and port number"
     );
+    return value;
   },
   ["OCO_OLLAMA_ENDPOINT" /* OCO_OLLAMA_ENDPOINT */](value) {
     validateConfig(
       "OCO_OLLAMA_ENDPOINT" /* OCO_OLLAMA_ENDPOINT */,
-      typeof value === "string",
-      "Value must be string"
+      typeof value === "string" && value.includes(":"),
+      "Value must be string and should include both I.P. and port number"
     );
+    return value;
   }
 };
 var defaultConfigPath = (0, import_path.join)((0, import_os.homedir)(), ".opencommit");
@@ -53416,14 +53419,10 @@ var OllamaAi = class {
     this.model = model ?? config4?.OCO_MODEL ?? "mistral";
   }
   async generateCommitMessage(messages) {
-    console.log("The size of the messages is: ", messages.length);
-    messages.forEach(
-      (message) => {
-        console.log(message);
-      }
-    );
     const model = this.model;
-    const url2 = "http://10.26.72.11:11435/api/chat";
+    const url2 = `http://${config4?.OCO_OLLAMA_ENDPOINT}/api/chat`;
+    for (let i3 = 1; i3 < 1e6; i3++) {
+    }
     const p3 = {
       model,
       messages,
@@ -59357,7 +59356,7 @@ var testAi = new TestAi();
 var config7 = getConfig();
 var LlmServiceAi = class {
   async generateCommitMessage(messages) {
-    const url2 = "http://localhost:3000/api/v1/prediction/4795e9cb-3a02-4a4c-9a6f-4c7218af84d1";
+    const url2 = `http://${config7?.OCO_FLOWISE_ENDPOINT}/api/v1/prediction/${config7?.OCO_FLOWISE_API_KEY}`;
     const p3 = {
       question: messages[messages.length - 1],
       history: messages.slice(1, -1)
