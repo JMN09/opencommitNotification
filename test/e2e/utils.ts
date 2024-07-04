@@ -16,13 +16,13 @@ export const prepareEnvironment = async (): Promise<{
   cleanup: () => Promise<void>;
 }> => {
   const tempDir = await fsMakeTempDir(path.join(tmpdir(), 'opencommit-test-'));
-  // Create a remote git repository int the temp directory. This is necessary to execute the `git push` command
+  //similar to the procedure in the unit test prepareFile, except we execute git commands to make it a git repository 
   await fsExec('git init --bare remote.git', { cwd: tempDir }); 
-  await fsExec('git clone remote.git test', { cwd: tempDir });
+  await fsExec('git clone remote.git test', { cwd: tempDir }); //clones a testing repo, I imagine with a preset content, in tempDir - by setting cwd current working directory to be tempDir
   const gitDir = path.resolve(tempDir, 'test');
-
+  //finds the absolute path for the file called test in the tempDir directory.
   const cleanup = async () => {
-    return fsRemove(tempDir, { recursive: true });
+    return fsRemove(tempDir, { recursive: true }); // clean up by calling clean up recursively on the tempDir, if its a directory recur, if its a file remove.
   }
   return {
     gitDir,

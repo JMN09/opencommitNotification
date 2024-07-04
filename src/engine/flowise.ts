@@ -16,10 +16,15 @@ export class FlowiseAi implements AiEngine {
 
     //console.log(messages);
     //process.exit()
-    
+    const gitDiff = messages[ messages.length - 1 ]?.content?.replace(/\\/g, '\\\\')  // Escape backslashes
+                                                            .replace(/"/g, '\\"')    // Escape double quotes
+                                                            .replace(/\n/g, '\\n')   // Escape newlines
+                                                            .replace(/\r/g, '\\r')   // Escape carriage returns
+                                                            .replace(/\t/g, '\\t');  // Escape tabs (if any)
+                                                            //fix diffs format for the embedding backend, also removed role and content fields
     const url = `http://${config?.OCO_FLOWISE_ENDPOINT}/api/v1/prediction/${config?.OCO_FLOWISE_API_KEY}`; // this key is specific to flowise
     const payload = {
-        question : messages[ messages.length - 1 ],
+        question : gitDiff,
         history : messages.slice( 1, -1 ) 
         // omitting 0, the system prompt, will be given to the llm in flowise
         // omitting the user prompt, which will be the question

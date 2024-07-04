@@ -1,10 +1,12 @@
 import { getConfig } from '../../src/commands/config';
 import { prepareFile } from './utils';
 
-describe('getConfig', () => {
-  const originalEnv = { ...process.env };
-  function resetEnv(env: NodeJS.ProcessEnv) {
-    Object.keys(process.env).forEach((key) => {
+describe('getConfig', () => { // creating a test suite
+  const originalEnv = { ...process.env }; // creating a copy of the current environment, one utility is to fallback to the original state after the test
+  function resetEnv(env: NodeJS.ProcessEnv) { // function that goes over the key value pairs in the current process env
+                                              // if a key is not in the env passed in object, then it is deleted from process.env
+                                              // o.w. the value of the key in process.env is updated to the value of the key in the env passed in object
+    Object.keys(process.env).forEach((key) => { 
       if (!(key in env)) {
         delete process.env[key];
       } else {
@@ -13,16 +15,16 @@ describe('getConfig', () => {
     });
   }
 
-  beforeEach(() => {
+  beforeEach(() => { // before each test, the process.env is reset to the original environment
     resetEnv(originalEnv);
   });
 
-  afterAll(() => {
+  afterAll(() => { // after all tests, the process.env is reset to the original environment
     resetEnv(originalEnv);
   });
 
   it('return config values from the global config file', async () => {
-    const configFile = await prepareFile(
+    const configFile = await prepareFile( 
       '.opencommit',
       `
 OCO_OPENAI_API_KEY="sk-key"
@@ -40,7 +42,7 @@ OCO_AI_PROVIDER="ollama"
 OCO_GITPUSH="false"
 OCO_ONE_LINE_COMMIT="true"
 `
-    );
+    ); // create a temporary file with the given content
     const config = getConfig({ configPath: configFile.filePath, envPath: '' });
 
     expect(config).not.toEqual(null);
@@ -58,8 +60,8 @@ OCO_ONE_LINE_COMMIT="true"
     expect(config!['OCO_AI_PROVIDER']).toEqual('ollama');
     expect(config!['OCO_GITPUSH']).toEqual(false);
     expect(config!['OCO_ONE_LINE_COMMIT']).toEqual(true);
-
-    await configFile.cleanup();
+    // checking that get config returns the expected values, which were directly written into the temporary test file
+    await configFile.cleanup(); 
   });
 
   it('return config values from the local env file', async () => {
@@ -99,7 +101,7 @@ OCO_ONE_LINE_COMMIT="true"
     expect(config!['OCO_AI_PROVIDER']).toEqual('ollama');
     expect(config!['OCO_GITPUSH']).toEqual(false);
     expect(config!['OCO_ONE_LINE_COMMIT']).toEqual(true);
-
+    // using envPath instead of configPath to get the configuration values
     await envFile.cleanup();
   });
 });

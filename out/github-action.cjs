@@ -49669,11 +49669,13 @@ var configValidators = {
 };
 var defaultConfigPath = (0, import_path.join)((0, import_os.homedir)(), ".opencommit");
 var defaultEnvPath = (0, import_path.resolve)(process.cwd(), ".env");
+console.log("Env Path: ", defaultEnvPath);
 var getConfig = ({
   configPath = defaultConfigPath,
   envPath = defaultEnvPath
 } = {}) => {
   dotenv.config({ path: envPath });
+  console.log("Printing the env\n", process.env.OCO_OPENAI_API_KEY);
   const configFromEnv = {
     OCO_OPENAI_API_KEY: process.env.OCO_OPENAI_API_KEY,
     OCO_ANTHROPIC_API_KEY: process.env.OCO_ANTHROPIC_API_KEY,

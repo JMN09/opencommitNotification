@@ -313,7 +313,6 @@ export type ConfigType = {
 
 const defaultConfigPath = pathJoin(homedir(), '.opencommit');
 const defaultEnvPath = pathResolve(process.cwd(), '.env');
-
 export const getConfig = ({
   configPath = defaultConfigPath,
   envPath = defaultEnvPath
