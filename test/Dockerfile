@@ -7,8 +7,8 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 RUN apt-get install -y nodejs
 
 # Setup git
-RUN git config --global user.email "jmn09@mail.aub.edu"
-RUN git config --global user.name "JMN09"
+RUN git config --global user.email "test@example.com"
+RUN git config --global user.name "Test User"
 
 WORKDIR /app
 COPY package.json /app/
@@ -19,6 +19,5 @@ RUN ls -la
 RUN npm ci
 COPY . /app
 RUN ls -la
-RUN chmod -R 755 /app/node_modules
 
 RUN npm run build
