@@ -344,9 +344,9 @@ export const getConfig = ({
     OCO_ONE_LINE_COMMIT:
       process.env.OCO_ONE_LINE_COMMIT === 'true' ? true : false,
     OCO_AZURE_ENDPOINT: process.env.OCO_AZURE_ENDPOINT || 'openai.azure.com',
-    OCO_FLOWISE_ENDPOINT: process.env.OCO_FLOWISE_ENDPOINT || 'undefined',
-    OCO_FLOWISE_API_KEY: process.env.OCO_FLOWISE_API_KEY || '',
-    OCO_OLLAMA_ENDPOINT: process.env.OCO_OLLAMA_ENDPOINT || ''
+    OCO_FLOWISE_ENDPOINT: process.env.OCO_FLOWISE_ENDPOINT || ':',
+    OCO_FLOWISE_API_KEY: process.env.OCO_FLOWISE_API_KEY || 'undefined',
+    OCO_OLLAMA_ENDPOINT: process.env.OCO_OLLAMA_ENDPOINT || ':'
   };
   const configExists = existsSync(configPath);
   if (!configExists) return configFromEnv;
