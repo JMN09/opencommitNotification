@@ -107,25 +107,20 @@ const INIT_MAIN_PROMPT = (
               '🦺, Add or update code related to validation.'
             : ''
         }`
-      : 'Do not preface the commit with anything. Conventional commit keywords:' +
-        JSON.stringify(
-          {
-            docs: 'Documentation only changes',
-            style:
-              'Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)',
-            refactor: 'A code change that neither fixes a bug nor adds a feature',
-            perf: 'A code change that improves performance',
-            test: 'Adding missing tests or correcting existing tests',
-            build: 'Changes that affect the build system or external dependencies',
-            ci: 'Changes to our CI configuration files and scripts',
-            chore: "Other changes that don't modify src or test files",
-            revert: 'Reverts a previous commit',
-            feat: 'A new feature',
-            fix: 'A bug fix',
-          },
-          null,
-          2
-        )
+      : 'Do not preface the commit with anything. Conventional commit keywords\n' +
+        
+            'docs: Documentation only changes\n' +
+            'style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)\n' +
+            'refactor: A code change that neither fixes a bug nor adds a feature\n' +
+            'perf: A code change that improves performance\n' +
+            'test: Adding missing tests or correcting existing tests\n' + 
+            'build: Changes that affect the build system or external dependencies\n' + 
+            'ci: Changes to our CI configuration files and scripts\n' + 
+            'chore: Other changes that don\'t modify src or test files\n' + 
+            'revert: Reverts a previous commit\n' + 
+            'feat: A new feature\n' + 
+            'fix: A bug fix\n' 
+        
   }  
     ${
       config?.OCO_DESCRIPTION
