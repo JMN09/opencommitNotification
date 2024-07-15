@@ -4,17 +4,12 @@ import 'cli-testing-library/extend-expect';
 import { prepareEnvironment } from './utils';
 
 it('cli flow to generate commit message for 1 new file (staged)', async () => {
-  const { gitDir, cleanup } = await prepareEnvironment(); //prep
+  const { gitDir, cleanup } = await prepareEnvironment();
 
   await render('echo' ,[`'console.log("Hello World");' > index.ts`], { cwd: gitDir });
   await render('git' ,['add index.ts'], { cwd: gitDir });
 
   const { queryByText, findByText, userEvent } = await render(`OCO_AI_PROVIDER='test' node`, [resolve('./out/cli.cjs')], { cwd: gitDir });
-  // destructuring the return value of render function into
-  // queryByText: function to query text in the console, returns null if not found
-  // findByText: function to find text in the console, throws error if not found ( may rely on async functions timing out )
-  // userEvent: function to simulate user events
-
 
   expect(await queryByText('No files are staged')).not.toBeInTheConsole();
   expect(await queryByText('Do you want to stage all files and generate commit message?')).not.toBeInTheConsole(); 
@@ -51,11 +46,9 @@ it('cli flow to generate commit message for 1 changed file (not staged)', async 
   userEvent.keyboard('[Enter]');
 
   expect(await findByText('Successfully committed')).toBeInTheConsole();
-
   expect(await findByText('Choose a remote to push to')).toBeInTheConsole();
   userEvent.keyboard('[Enter]');
 
   expect(await findByText('Successfully pushed all commits to origin')).toBeInTheConsole();
-  // trying the stage changed files flow when some files are changed but not staged
   await cleanup();
 });
