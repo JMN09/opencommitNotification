@@ -30630,6 +30630,26 @@ function getI18nLocal(value) {
 }
 
 // src/commands/config.ts
+var CONFIG_KEYS = /* @__PURE__ */ ((CONFIG_KEYS2) => {
+  CONFIG_KEYS2["OCO_OPENAI_API_KEY"] = "OCO_OPENAI_API_KEY";
+  CONFIG_KEYS2["OCO_ANTHROPIC_API_KEY"] = "OCO_ANTHROPIC_API_KEY";
+  CONFIG_KEYS2["OCO_AZURE_API_KEY"] = "OCO_AZURE_API_KEY";
+  CONFIG_KEYS2["OCO_TOKENS_MAX_INPUT"] = "OCO_TOKENS_MAX_INPUT";
+  CONFIG_KEYS2["OCO_TOKENS_MAX_OUTPUT"] = "OCO_TOKENS_MAX_OUTPUT";
+  CONFIG_KEYS2["OCO_OPENAI_BASE_PATH"] = "OCO_OPENAI_BASE_PATH";
+  CONFIG_KEYS2["OCO_DESCRIPTION"] = "OCO_DESCRIPTION";
+  CONFIG_KEYS2["OCO_EMOJI"] = "OCO_EMOJI";
+  CONFIG_KEYS2["OCO_MODEL"] = "OCO_MODEL";
+  CONFIG_KEYS2["OCO_LANGUAGE"] = "OCO_LANGUAGE";
+  CONFIG_KEYS2["OCO_MESSAGE_TEMPLATE_PLACEHOLDER"] = "OCO_MESSAGE_TEMPLATE_PLACEHOLDER";
+  CONFIG_KEYS2["OCO_PROMPT_MODULE"] = "OCO_PROMPT_MODULE";
+  CONFIG_KEYS2["OCO_AI_PROVIDER"] = "OCO_AI_PROVIDER";
+  CONFIG_KEYS2["OCO_GITPUSH"] = "OCO_GITPUSH";
+  CONFIG_KEYS2["OCO_ONE_LINE_COMMIT"] = "OCO_ONE_LINE_COMMIT";
+  CONFIG_KEYS2["OCO_AZURE_ENDPOINT"] = "OCO_AZURE_ENDPOINT";
+  CONFIG_KEYS2["OCO_OLLAMA_API_URL"] = "OCO_API_URL";
+  return CONFIG_KEYS2;
+})(CONFIG_KEYS || {});
 var MODEL_LIST = {
   openai: [
     "gpt-3.5-turbo",
@@ -30836,6 +30856,7 @@ var configValidators = {
     );
     return value;
   },
+<<<<<<< HEAD
   ["OCO_FLOWISE_ENDPOINT" /* OCO_FLOWISE_ENDPOINT */](value) {
     validateConfig(
       "OCO_FLOWISE_ENDPOINT" /* OCO_FLOWISE_ENDPOINT */,
@@ -30849,6 +30870,13 @@ var configValidators = {
       "OCO_OLLAMA_ENDPOINT" /* OCO_OLLAMA_ENDPOINT */,
       typeof value === "string" && value.includes(":"),
       "Value must be string and should include both I.P. and port number"
+=======
+  ["OCO_API_URL" /* OCO_OLLAMA_API_URL */](value) {
+    validateConfig(
+      CONFIG_KEYS.OCO_API_URL,
+      typeof value === "string" && value.startsWith("http"),
+      `${value} is not a valid URL`
+>>>>>>> origin/master
     );
     return value;
   }
@@ -34180,12 +34208,20 @@ var api = new OpenAi();
 var config4 = getConfig();
 var OllamaAi = class {
   model = "mistral";
+  url = "http://localhost:11434/api/chat";
   setModel(model) {
     this.model = model ?? config4?.OCO_MODEL ?? "mistral";
   }
+  setUrl(url2) {
+    this.url = url2 ?? config4?.OCO_OLLAMA_API_URL ?? "http://localhost:11434/api/chat";
+  }
   async generateCommitMessage(messages) {
     const model = this.model;
+<<<<<<< HEAD
     const url2 = `http://${config4?.OCO_OLLAMA_ENDPOINT}/api/chat`;
+=======
+    const url2 = this.url;
+>>>>>>> origin/master
     const p4 = {
       model,
       messages,

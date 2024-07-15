@@ -28,9 +28,9 @@ export enum CONFIG_KEYS {
   OCO_GITPUSH = 'OCO_GITPUSH',
   OCO_ONE_LINE_COMMIT = 'OCO_ONE_LINE_COMMIT',
   OCO_AZURE_ENDPOINT = 'OCO_AZURE_ENDPOINT',
+  OCO_OLLAMA_API_URL = 'OCO_API_URL',
   OCO_FLOWISE_ENDPOINT = 'OCO_FLOWISE_ENDPOINT',
-  OCO_FLOWISE_API_KEY = 'OCO_FLOWISE_API_KEY',
-  OCO_OLLAMA_ENDPOINT = 'OCO_OLLAMA_ENDPOINT'
+  OCO_FLOWISE_API_KEY = 'OCO_FLOWISE_API_KEY'
 }
 
 export enum CONFIG_MODES {
@@ -294,17 +294,14 @@ export const configValidators = { // collection of validation functions for each
 
     return value;
   },
-
-  [CONFIG_KEYS.OCO_OLLAMA_ENDPOINT]( value: any ){
+  [CONFIG_KEYS.OCO_OLLAMA_API_URL](value: any) { // add simple api validator
     validateConfig(
-      CONFIG_KEYS.OCO_OLLAMA_ENDPOINT,
-      typeof value === 'string' && value.includes(':'),
-      'Value must be string and should include both I.P. and port number' // Considering the possibility of DNS lookup or feeding the I.P. explicitely, there is no pattern to verify, except a column for the port number
+      CONFIG_KEYS.OCO_API_URL,
+      typeof value === 'string' && value.startsWith('http'),
+      `${value} is not a valid URL`
     );
-
     return value;
-  }
-  
+  },
 };
 
 export type ConfigType = {
@@ -346,7 +343,6 @@ export const getConfig = ({
     OCO_AZURE_ENDPOINT: process.env.OCO_AZURE_ENDPOINT || 'openai.azure.com',
     OCO_FLOWISE_ENDPOINT: process.env.OCO_FLOWISE_ENDPOINT || ':',
     OCO_FLOWISE_API_KEY: process.env.OCO_FLOWISE_API_KEY || 'undefined',
-    OCO_OLLAMA_ENDPOINT: process.env.OCO_OLLAMA_ENDPOINT || ':'
   };
   const configExists = existsSync(configPath);
   if (!configExists) return configFromEnv;
