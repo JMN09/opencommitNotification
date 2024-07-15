@@ -16,17 +16,14 @@ export const prepareEnvironment = async (): Promise<{
   cleanup: () => Promise<void>;
 }> => {
   const tempDir = await fsMakeTempDir(path.join(tmpdir(), 'opencommit-test-'));
-  //similar to the procedure in the unit test prepareFile, except we execute git commands to make it a git repository 
   await fsExec('git init --bare remote.git', { cwd: tempDir }); 
-  await fsExec('git clone remote.git test', { cwd: tempDir }); //clones a testing repo, I imagine with a preset content, in tempDir - by setting cwd current working directory to be tempDir
+  await fsExec('git clone remote.git test', { cwd: tempDir });
   const gitDir = path.resolve(tempDir, 'test');
-  //finds the absolute path for the folder called test ( created in the git clone statement ) in the tempDir directory.
   const cleanup = async () => {
-    return fsRemove(tempDir, { recursive: true }); // clean up by calling clean up recursively on the tempDir, if its a directory recur, if its a file remove.
+    return fsRemove(tempDir, { recursive: true }); 
   }
   return {
     gitDir,
     cleanup,
   }
-  // the goal is to setup a controlled and isolated envrironment for testing Git operations with the opencommit tool, ensuring a clean beginning stat.
 }
