@@ -3,7 +3,7 @@ import { prepareFile } from './utils';
 
 describe('getConfig', () => { 
   const originalEnv = { ...process.env };
-  function resetEnv(env: NodeJS.ProcessEnv) { 
+  function resetEnv(env: NodeJS.ProcessEnv) {
     Object.keys(process.env).forEach((key) => { 
       if (!(key in env)) {
         delete process.env[key];

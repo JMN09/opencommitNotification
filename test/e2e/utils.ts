@@ -16,6 +16,7 @@ export const prepareEnvironment = async (): Promise<{
   cleanup: () => Promise<void>;
 }> => {
   const tempDir = await fsMakeTempDir(path.join(tmpdir(), 'opencommit-test-'));
+  // Create a remote git repository int the temp directory. This is necessary to execute the `git push` command
   await fsExec('git init --bare remote.git', { cwd: tempDir }); 
   await fsExec('git clone remote.git test', { cwd: tempDir });
   const gitDir = path.resolve(tempDir, 'test');

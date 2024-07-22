@@ -1,5 +1,5 @@
 import { resolve } from 'path'
-import { render } from 'cli-testing-library' 
+import { render } from 'cli-testing-library'
 import 'cli-testing-library/extend-expect'; 
 import { prepareEnvironment } from './utils';
 

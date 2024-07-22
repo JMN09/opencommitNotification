@@ -19,5 +19,4 @@ RUN ls -la
 RUN npm ci
 COPY . /app
 RUN ls -la
-
 RUN npm run build

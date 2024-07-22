@@ -121,7 +121,7 @@ const validateConfig = (
   }
 };
 
-export const configValidators = { // collection of validation functions for each config key 
+export const configValidators = { 
   [CONFIG_KEYS.OCO_OPENAI_API_KEY](value: any, config: any = {}) {
     if (config.OCO_AI_PROVIDER == 'gemini') return value;
 
@@ -464,7 +464,7 @@ export const setConfig = (
   const config = getConfig() || {};
   for (const [configKey, configValue] of keyValues) {
 
-    if (!configValidators.hasOwnProperty(configKey)) { // determine if the config key is one that's defined in the enum type at the beginning 
+    if (!configValidators.hasOwnProperty(configKey)) { 
       throw new Error(`Unsupported config key: ${configKey}`);
     }
 

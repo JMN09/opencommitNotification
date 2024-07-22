@@ -68,7 +68,6 @@
     "@typescript-eslint/eslint-plugin": "^5.45.0",
     "@typescript-eslint/parser": "^5.45.0",
     "cli-testing-library": "^2.0.2",
-    "cross-env": "^7.0.3",
     "dotenv": "^16.0.3",
     "esbuild": "^0.15.18",
     "eslint": "^8.28.0",

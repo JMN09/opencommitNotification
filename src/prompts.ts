@@ -107,19 +107,8 @@ const INIT_MAIN_PROMPT = (
               '🦺, Add or update code related to validation.'
             : ''
         }`
-      : 'Do not preface the commit with anything. Conventional commit keywords\n' +
-        
-            'docs: Documentation only changes\n' +
-            'style: Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)\n' +
-            'refactor: A code change that neither fixes a bug nor adds a feature\n' +
-            'perf: A code change that improves performance\n' +
-            'test: Adding missing tests or correcting existing tests\n' + 
-            'build: Changes that affect the build system or external dependencies\n' + 
-            'ci: Changes to our CI configuration files and scripts\n' + 
-            'chore: Other changes that don\'t modify src or test files\n' + 
-            'revert: Reverts a previous commit\n' + 
-            'feat: A new feature\n' + 
-            'fix: A bug fix\n' 
+      : 'Do not preface the commit with anything. Conventional commit keywords:' +
+        'fix, feat, build, chore, ci, docs, style, refactor, perf, test.'
         
   }  
     ${
@@ -129,8 +118,7 @@ const INIT_MAIN_PROMPT = (
     }
     ${
       config?.OCO_ONE_LINE_COMMIT
-        ? 'Craft a concise commit message that encapsulates all changes made, with an emphasis on the primary updates. If the modifications share a common theme or scope, mention it succinctly; otherwise, leave the scope out to maintain focus. The goal is to provide a clear and unified overview of the changes in a one single message, without diverging into a list of commit per file change. Make it brief.'
-        : ''
+      ? 'Craft a concise commit message that encapsulates all changes made, with an emphasis on the primary updates. If the modifications share a common theme or scope, mention it succinctly; otherwise, leave the scope out to maintain focus. The goal is to provide a clear and unified overview of the changes in a one single message, without diverging into a list of commit per file change. Make it brief.'        : ''
     }
     Use the present tense. Lines must not be longer than 74 characters. Use ${language} for the commit message.`
 });
