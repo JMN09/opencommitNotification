@@ -1,10 +1,10 @@
 import { getConfig } from '../../src/commands/config';
 import { prepareFile } from './utils';
 
-describe('getConfig', () => { 
+describe('getConfig', () => {
   const originalEnv = { ...process.env };
   function resetEnv(env: NodeJS.ProcessEnv) {
-    Object.keys(process.env).forEach((key) => { 
+    Object.keys(process.env).forEach((key) => {
       if (!(key in env)) {
         delete process.env[key];
       } else {
@@ -17,12 +17,12 @@ describe('getConfig', () => {
     resetEnv(originalEnv);
   });
 
-  afterAll(() => { 
+  afterAll(() => {
     resetEnv(originalEnv);
   });
 
   it('return config values from the global config file', async () => {
-    const configFile = await prepareFile( 
+    const configFile = await prepareFile(
       '.opencommit',
       `
 OCO_OPENAI_API_KEY="sk-key"
@@ -40,7 +40,7 @@ OCO_AI_PROVIDER="ollama"
 OCO_GITPUSH="false"
 OCO_ONE_LINE_COMMIT="true"
 `
-    ); 
+    );
     const config = getConfig({ configPath: configFile.filePath, envPath: '' });
 
     expect(config).not.toEqual(null);
@@ -58,7 +58,8 @@ OCO_ONE_LINE_COMMIT="true"
     expect(() => ['ollama', 'gemini'].includes(config!['OCO_AI_PROVIDER'])).toBeTruthy();
     expect(config!['OCO_GITPUSH']).toEqual(false);
     expect(config!['OCO_ONE_LINE_COMMIT']).toEqual(true);
-    await configFile.cleanup(); 
+
+    await configFile.cleanup();
   });
 
   it('return config values from the local env file', async () => {
@@ -98,6 +99,7 @@ OCO_ONE_LINE_COMMIT="true"
     expect(() => ['ollama', 'gemini'].includes(config!['OCO_AI_PROVIDER'])).toBeTruthy();
     expect(config!['OCO_GITPUSH']).toEqual(false);
     expect(config!['OCO_ONE_LINE_COMMIT']).toEqual(true);
+
     await envFile.cleanup();
   });
 });

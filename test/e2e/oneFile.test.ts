@@ -11,7 +11,7 @@ it('cli flow to generate commit message for 1 new file (staged)', async () => {
 
   const { queryByText, findByText, userEvent } = await render(`OCO_AI_PROVIDER='test' node`, [resolve('./out/cli.cjs')], { cwd: gitDir });
   expect(await queryByText('No files are staged')).not.toBeInTheConsole();
-  expect(await queryByText('Do you want to stage all files and generate commit message?')).not.toBeInTheConsole(); 
+  expect(await queryByText('Do you want to stage all files and generate commit message?')).not.toBeInTheConsole();
 
   expect(await findByText('Generating the commit message')).toBeInTheConsole();
   expect(await findByText('Confirm the commit message?')).toBeInTheConsole();
@@ -45,9 +45,11 @@ it('cli flow to generate commit message for 1 changed file (not staged)', async 
   userEvent.keyboard('[Enter]');
 
   expect(await findByText('Successfully committed')).toBeInTheConsole();
+
   expect(await findByText('Choose a remote to push to')).toBeInTheConsole();
   userEvent.keyboard('[Enter]');
 
   expect(await findByText('Successfully pushed all commits to origin')).toBeInTheConsole();
+
   await cleanup();
 });

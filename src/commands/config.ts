@@ -341,8 +341,8 @@ export const configValidators = {
 
     return value;
   },
+  
   [CONFIG_KEYS.OCO_AZURE_ENDPOINT](value: any) {
-
     validateConfig(
       CONFIG_KEYS.OCO_AZURE_ENDPOINT,
       value.includes('openai.azure.com'),
@@ -351,6 +351,7 @@ export const configValidators = {
 
     return value;
   },
+
   [CONFIG_KEYS.OCO_FLOWISE_ENDPOINT](value: any) {
     validateConfig(
       CONFIG_KEYS.OCO_FLOWISE_ENDPOINT,
@@ -360,6 +361,7 @@ export const configValidators = {
 
     return value;
   },
+
   [CONFIG_KEYS.OCO_TEST_MOCK_TYPE](value: any) {
     validateConfig(
       CONFIG_KEYS.OCO_TEST_MOCK_TYPE,
@@ -462,8 +464,8 @@ export const setConfig = (
   configPath: string = defaultConfigPath
 ) => {
   const config = getConfig() || {};
-  for (const [configKey, configValue] of keyValues) {
 
+  for (const [configKey, configValue] of keyValues) {
     if (!configValidators.hasOwnProperty(configKey)) { 
       throw new Error(`Unsupported config key: ${configKey}`);
     }
@@ -475,6 +477,7 @@ export const setConfig = (
     } catch (error) {
       parsedConfigValue = configValue;
     }
+
     const validValue =
       configValidators[configKey as CONFIG_KEYS](parsedConfigValue);
     config[configKey as CONFIG_KEYS] = validValue;

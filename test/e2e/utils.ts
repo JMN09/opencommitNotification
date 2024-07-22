@@ -20,8 +20,9 @@ export const prepareEnvironment = async (): Promise<{
   await fsExec('git init --bare remote.git', { cwd: tempDir }); 
   await fsExec('git clone remote.git test', { cwd: tempDir });
   const gitDir = path.resolve(tempDir, 'test');
+
   const cleanup = async () => {
-    return fsRemove(tempDir, { recursive: true }); 
+    return fsRemove(tempDir, { recursive: true });
   }
   return {
     gitDir,
