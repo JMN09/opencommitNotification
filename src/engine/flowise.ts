@@ -41,5 +41,3 @@ export class FlowiseAi implements AiEngine {
     }
   }
 }
-
-export const flowiseAi = new FlowiseAi();

@@ -51,5 +51,3 @@ export class OllamaAi implements AiEngine {
     }
   }
 }
-
-export const ollamaAi = new OllamaAi();

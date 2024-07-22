@@ -27,3 +27,5 @@ export const prepareEnvironment = async (): Promise<{
     cleanup,
   }
 }
+
+export const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
