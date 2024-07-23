@@ -27,7 +27,7 @@ jobs:
       - name: Check for Updates
         id: check_updates
         run: |
-          git pull --no-ff upstream master
+          git pull upstream master --allow-unrelated-histories
           echo "updates"
 
       - name: Send Notification
