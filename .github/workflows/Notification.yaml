@@ -25,7 +25,7 @@ jobs:
         id: check_updates
         run: |
           git checkout master
-          git pull upstream master
+          git pull upstream master --ff-only #How to reconcile divergent branches, we are assuming no merge conflicts occur
           echo "updates"
 
       - name: Send Notification
