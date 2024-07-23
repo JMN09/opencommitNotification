@@ -3,7 +3,7 @@ name: Sync Fork and Notify
 on:
   schedule:
     - cron: '0 0 * * *' # Runs daily at midnight
-  workflow_dispatch: # you can run it manually using workflow_dispatch event
+  workflow_dispatch: # Allows manual run of the workflow
 
 jobs:
   sync:
@@ -15,10 +15,12 @@ jobs:
           repository: 'JMN09/opencommitNotification'
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: false
+
       - name: Set Git Config
         run: |
           git config --global user.name "JMN09"
           git config --global user.email "jmn09@mail.aub.edu"
+
       - name: Add Upstream
         run: git remote add upstream https://github.com/di-sukharev/opencommit.git
 
@@ -32,8 +34,10 @@ jobs:
         id: check_updates
         run: |
           git pull upstream master --allow-unrelated-histories --no-rebase
-          echo "updates"
-
-      - name: Send Notification
-        if: steps.check_updates.outputs.updates
-        run: echo "Hello"
+          NEW_COMMITS=$(git log --since="24 hours ago" --oneline)
+          echo "${NEW_COMMITS}"
+          if [ -n "${NEW_COMMITS}" ]; then
+            echo "hello"
+          else
+            echo "No new commits in the past 24 hours."
+          fi
