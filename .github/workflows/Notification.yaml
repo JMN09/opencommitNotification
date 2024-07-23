@@ -24,8 +24,8 @@ jobs:
       - name: Check for Updates
         id: check_updates
         run: |
-          git checkout main
-          git pull upstream main
+          git checkout master
+          git pull upstream master
           echo "updates"
 
       - name: Send Notification
