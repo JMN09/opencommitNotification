@@ -32,7 +32,7 @@ jobs:
         id: check_updates
         run: |
           git pull upstream master --allow-unrelated-histories --no-rebase
-          git diff --exit-code || echo "updates"
+          echo "updates"
 
       - name: Send Notification
         if: steps.check_updates.outputs.updates
