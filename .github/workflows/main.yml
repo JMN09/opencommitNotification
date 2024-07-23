@@ -15,6 +15,10 @@ jobs:
           repository: 'JMN09/opencommitNotification'
           token: ${{ secrets.GITHUB_TOKEN }}
           persist-credentials: false
+      - name: Set Git Config
+        run: |
+          git config --global user.name "JMN09"
+          git config --global user.email "jmn09@mail.aub.edu"
       - name: Add Upstream
         run: git remote add upstream https://github.com/di-sukharev/opencommit.git
 
@@ -24,11 +28,11 @@ jobs:
       - name: Checkout Master
         run: git checkout master
 
-      - name: Check for Updates
+      - name: Pull and Merge
         id: check_updates
         run: |
           git pull upstream master --allow-unrelated-histories --no-rebase
-          echo "updates"
+          git diff --exit-code || echo "updates"
 
       - name: Send Notification
         if: steps.check_updates.outputs.updates
